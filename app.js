@@ -16,6 +16,9 @@ app.set("view engine", "ejs");
 app.get("/", (req, res) => {
     res.render("home.ejs");
     });
+app.get("/ilan", (req, res) => {
+    res.render("advert.ejs");
+    });
 app.get("/evsahibi", (req, res) => {
     res.render("evsahibi.ejs")
     });
