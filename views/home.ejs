@@ -318,14 +318,22 @@
            <% for (var i = 0; i < adverts.length; i++) { %>
           <div class="col-12 col-md-6 col-lg-4 col-xl-3">
                 <a href="/ilan/<%= adverts[i].id %>" class="card card-video border-0 bg-transparent mb-4">
-                    <div id="carouselExampleControlsNoTouching1" class="carousel slide  " data-bs-touch="false" data-bs-interval="false">
+                    <div id="carouselExampleControlsNoTouching<%= i %>" class="carousel slide  " data-bs-touch="false" data-bs-interval="false">
                       <div class="carousel-inner" >
                         <div class="carousel-item active">
-                          <img class="_6tbg2q d-block w-100" aria-hidden="true" elementtiming="LCP-target" fetchpriority="high" id="FMP-target" loading="eager" src="https://a0.muscache.com/im/pictures/e25a9b25-fa98-4160-bfd1-039287bf38b6.jpg?im_w=720" data-original-uri="https://a0.muscache.com/im/pictures/e25a9b25-fa98-4160-bfd1-039287bf38b6.jpg?im_w=720" style="height:250px;border-radius:30px ;object-fit: cover; vertical-align: bottom;">
+                          <img class="_6tbg2q d-block w-100" aria-hidden="true" elementtiming="LCP-target" fetchpriority="high" id="FMP-target" loading="eager" src="<%= adverts[i].image_url[0] %>" data-original-uri="https://a0.muscache.com/im/pictures/e25a9b25-fa98-4160-bfd1-039287bf38b6.jpg?im_w=720" style="height:250px;border-radius:30px ;object-fit: cover; vertical-align: bottom;">
       
                         </div>
                         <div class="carousel-item">
-                          <img class="_6tbg2q d-block w-100" aria-hidden="true" alt="" elementtiming="LCP-target" fetchpriority="high" id="FMP-target" src="https://a0.muscache.com/im/pictures/miso/Hosting-717134404264905813/original/dfe9fd1e-a010-43c9-b546-0bbc7d59f7f3.jpeg?im_w=720" data-original-uri="https://a0.muscache.com/pictures/miso/Hosting-717134404264905813/original/dfe9fd1e-a010-43c9-b546-0bbc7d59f7f3.jpeg" style="height:250px;border-radius:30px ;object-fit: cover; vertical-align: bottom;">
+                          <img class="_6tbg2q d-block w-100" aria-hidden="true" alt="" elementtiming="LCP-target" fetchpriority="high" id="FMP-target" src="<%= adverts[i].image_url[1] %>" data-original-uri="https://a0.muscache.com/pictures/miso/Hosting-717134404264905813/original/dfe9fd1e-a010-43c9-b546-0bbc7d59f7f3.jpeg" style="height:250px;border-radius:30px ;object-fit: cover; vertical-align: bottom;">
+                        </div>
+                        <div class="carousel-item">
+                         
+                          <img class="_6tbg2q d-block w-100" aria-hidden="true" alt="" elementtiming="LCP-target" src="https://a0.muscache.com/im/pictures/miso/Hosting-717134404264905813/original/b027074b-b708-4e00-84f6-37e8d1ab7aac.jpeg?im_w=720" data-original-uri="https://a0.muscache.com/pictures/miso/Hosting-717134404264905813/original/b027074b-b708-4e00-84f6-37e8d1ab7aac.jpeg" style="height:250px;border-radius:30px ;object-fit: cover; vertical-align: bottom;">
+                        </div>
+                        <div class="carousel-item">
+                         
+                          <img class="_6tbg2q d-block w-100" aria-hidden="true" alt="" elementtiming="LCP-target" src="https://a0.muscache.com/im/pictures/miso/Hosting-717134404264905813/original/b027074b-b708-4e00-84f6-37e8d1ab7aac.jpeg?im_w=720" data-original-uri="https://a0.muscache.com/pictures/miso/Hosting-717134404264905813/original/b027074b-b708-4e00-84f6-37e8d1ab7aac.jpeg" style="height:250px;border-radius:30px ;object-fit: cover; vertical-align: bottom;">
                         </div>
                         <div class="carousel-item">
                          
@@ -333,11 +341,11 @@
                         </div>
                       
                       </div>
-                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching1" data-bs-slide="prev">
+                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching<%= i %>" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
                       </button>
-                      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControlsNoTouching1" data-bs-slide="next">
+                      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControlsNoTouching<%= i %>" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
                       </button>
