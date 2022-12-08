@@ -14,6 +14,7 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 
 
+
 app.get("/", (req, res) => {
     res.render("home.ejs");
     });
@@ -21,4 +22,5 @@ app.get("/evsahibi", (req, res) => {
     res.render("evsahibi.ejs")
     });
 
+require("./routes/advert.routes.js")(app);
 app.listen(process.env.PORT, () => console.log("app is running"));
