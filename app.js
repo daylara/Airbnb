@@ -15,19 +15,19 @@ app.set("view engine", "ejs");
 
 app.get("/", async (req, res) => {
     const allAdverts = []
-    conn.query("SELECT id,price_per_day,description,address FROM adverts",(err,rows)=>{
+    conn.query("SELECT * FROM adverts INNER JOIN media on adverts.id=media.advert_id",(err,rows)=>{
         if(!err){
-            // console.log(rows)
-
-          rows.forEach(RowDataPacket => {
-               allAdverts.push({
-                id:RowDataPacket.id,
-                 price_per_day: RowDataPacket.price_per_day,
-                 description: RowDataPacket.description,
-                 address: RowDataPacket.address
-               });
+            rows.forEach(RowDataPacket => {
+                allAdverts.push({
+                    id: RowDataPacket.id,
+                    price_per_day: RowDataPacket.price_per_day,
+                    description: RowDataPacket.description,
+                    address: RowDataPacket.address,
+                    image_url: RowDataPacket.image_url,
+                });
+               
           });  
-          console.log(allAdverts);
+          console.log(allAdverts.image_url);
           res.render("home",{adverts:allAdverts});
         }
         else
