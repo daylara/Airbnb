@@ -1,0 +1,10 @@
+#searchBtn:hover{
+ background-color: #FF5A5F;
+}
+.bigImage{
+    width: 522px; 
+}
+.smallImage{
+    width: 267px;
+    height: 275px;
+}

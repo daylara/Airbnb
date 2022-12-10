@@ -10,7 +10,6 @@ var mysqlConnection = mysql.createConnection({
   port: process.env.DB_PORT,
   multipleStatements: true,
 });
-
 mysqlConnection.connect((err) => {
   if (err) {
     console.log(err.message);
