@@ -27,7 +27,7 @@ app.get("/", async (req, res) => {
                 });
                
           });  
-          console.log(allAdverts.image_url);
+          console.log(allAdverts);
           res.render("home",{adverts:allAdverts});
         }
         else

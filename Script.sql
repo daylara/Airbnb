@@ -52,7 +52,7 @@ CREATE TABLE adverts (
 CREATE TABLE media (
   id int NOT NULL AUTO_INCREMENT,
   advert_id INT NOT NULL,
-  image_url JSON NOT NULL,
+  image_url TEXT NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (advert_id) REFERENCES adverts(id)
 );
@@ -132,97 +132,73 @@ INSERT INTO `adverts` VALUES (1,296,'Magnam fugit illo et consequatur. Vel et ma
 							(9,563,'Maecenas rhoncus aliquam lacus.','3996 Breanna Fall Suite 369\nDeckowhaven, SD 51615-5840','2021-03-21 11:24:37','2012-07-28 12:59:47',9,9,9,true),
 							(10,382,'Morbi porttitor lorem id ligula.','512 Malcolm Glens\nLake Porter, PA 49342-1386','2011-10-04 02:06:11','2001-10-11 20:05:42',10,10,10,false);						
 
-						
-INSERT INTO `media` VALUES (1,1,'https://loremflickr.com/640/480/'),
-						   (2,2,'https://loremflickr.com/640/480/'),
-						   (3,3,'https://loremflickr.com/640/480/'),
-						   (4,4,'https://loremflickr.com/640/480/'),
-						   (5,5,'https://loremflickr.com/640/480/'),
-						   (6,6,'https://loremflickr.com/640/480/'),
-						   (7,7,'https://loremflickr.com/640/480/'),
-						   (8,8,'https://loremflickr.com/640/480/'),
-						   (9,9,'https://loremflickr.com/640/480/'),
-						   (10,10,'https://loremflickr.com/640/480/');
 
-INSERT INTO `media` VALUES (1,1, JSON_ARRAY(
-    'https://a0.muscache.com/im/pictures/57e96162-6804-4773-bb59-dd5ca8e69e21.jpg?im_w=1200',
-    'https://a0.muscache.com/im/pictures/41a530cd-f0ea-4716-bf6c-9e4fd997804d.jpg?im_w=720',
-    'https://a0.muscache.com/im/pictures/e352de89-252f-436d-98ce-32517d8ffddf.jpg?im_w=720',
-    'https://a0.muscache.com/im/pictures/d1c3be0e-b743-4826-bcf7-83acb196a493.jpg?im_w=720',
-    'https://a0.muscache.com/im/pictures/44c4aaf6-3608-4f3c-8a2d-4318e9e47430.jpg?im_w=720'
-  )
-);
-INSERT INTO `media` VALUES (2,2, JSON_ARRAY(
-'https://a0.muscache.com/im/pictures/0d93e337-c49c-4bf5-83f4-982cb9f2e132.jpg?im_w=720',
-'https://a0.muscache.com/im/pictures/661bf5d6-5f89-4ab6-8397-86e1002f2c2d.jpg?im_w=720',
-'https://a0.muscache.com/im/pictures/5c9897c0-271e-4982-8392-da12c6ba373a.jpg?im_w=720',
-'https://a0.muscache.com/im/pictures/79fb2c80-bf4d-4a7e-8f66-9011fb14d814.jpg?im_w=720',
-'https://a0.muscache.com/im/pictures/c7a534fc-a289-4ca0-862b-282bad0b3487.jpg?im_w=720'
-  )
-);
-INSERT INTO `media` VALUES (3,3, JSON_ARRAY(
-'https://a0.muscache.com/im/pictures/3efc8fc3-0d9b-4ae3-a4ad-5acd2af63023.jpg?im_w=1200',
-'https://a0.muscache.com/im/pictures/9e3f7acd-ca97-43fb-ab77-3e8284cbe489.jpg?im_w=720',
-'https://a0.muscache.com/im/pictures/bda69a7d-fd27-4407-8370-e891bb5338aa.jpg?im_w=720',
-'https://a0.muscache.com/im/pictures/67f7d021-b98f-4fa5-af13-f4aa13a38fd1.jpg?im_w=720',
-'https://a0.muscache.com/im/pictures/fe8e1eab-bb75-4cb9-a735-64d2c74120d7.jpg?im_w=720'
-  )
-);
-INSERT INTO `media` VALUES (4,4, JSON_ARRAY(
-'https://a0.muscache.com/im/pictures/c3fa3c40-4c21-4775-a478-599198f1979f.jpg?im_w=720',
-'https://a0.muscache.com/im/pictures/809ca1df-4009-4c7d-bc76-700ced9610ba.jpg?im_w=720',
-'https://a0.muscache.com/im/pictures/3ae268be-2695-4d3a-8b69-39c2178c7d08.jpg?im_w=720',
-'https://a0.muscache.com/im/pictures/74da68ea-4ffc-49c4-ba76-c2b0817b6543.jpg?im_w=720',
-'https://a0.muscache.com/im/pictures/40ab55f2-c0bf-4aee-8370-61d1044f5ec7.jpg?im_w=720'
-  )
-);
-INSERT INTO `media` VALUES (5,5,JSON_ARRAY(
-	'https://a0.muscache.com/im/pictures/miso/Hosting-713793474951553871/original/2ac03203-3d06-441c-bc82-77f28ac26c6a.jpeg?im_w=720',
-                                    'https://a0.muscache.com/im/pictures/miso/Hosting-713793474951553871/original/467c73f5-711a-49c3-a358-bad81cfe4a02.jpeg?im_w=720',
-                                    'https://a0.muscache.com/im/pictures/miso/Hosting-713793474951553871/original/a5049cbc-82f5-43f7-b536-1298c93f9d64.jpeg?im_w=720', 
-                                    'https://a0.muscache.com/im/pictures/miso/Hosting-713793474951553871/original/06ec5b7b-0197-47f8-92e8-bffa074f9b1c.jpeg?im_w=720', 
-                                    'https://a0.muscache.com/im/pictures/miso/Hosting-713793474951553871/original/779aef02-d2da-476a-a79c-b63e1b7807d2.jpeg?im_w=720%27')	);		
 
-INSERT INTO `media` VALUES (6,6, JSON_ARRAY(
-'https://a0.muscache.com/im/pictures/f4654645-07e9-4e65-96fe-49202784f33f.jpg?im_w=720',
-'https://a0.muscache.com/im/pictures/3e859cb9-5e77-4d66-98c0-e7fa82f1f16d.jpg?im_w=720',
-'https://a0.muscache.com/im/pictures/656a28c4-680c-437a-b6ab-2163176c6dfd.jpg?im_w=720',
-'https://a0.muscache.com/im/pictures/670e97e8-cd79-4d88-b11d-3c7f584f29fc.jpg?im_w=720',
-'https://a0.muscache.com/im/pictures/8efcc304-3a90-42b1-9534-3bf6fcc39031.jpg?im_w=720'
-  )
-);								
-INSERT INTO `media` VALUES (7,7, JSON_ARRAY(
-'https://a0.muscache.com/im/pictures/miso/Hosting-53356466/original/f353fb80-0915-40ab-8032-6bc810ac273e.jpeg?im_w=720',
-'https://a0.muscache.com/im/pictures/miso/Hosting-53356466/original/80597541-a243-4938-b479-00995447f06c.jpeg?im_w=720',
-'https://a0.muscache.com/im/pictures/miso/Hosting-53356466/original/6892e348-4447-4128-92e7-b805b94646d2.jpeg?im_w=720',
-'https://a0.muscache.com/im/pictures/miso/Hosting-53356466/original/a90fdf8f-acc2-4ff0-82bc-8fdd4d24e0d4.jpeg?im_w=720',
-'https://a0.muscache.com/im/pictures/miso/Hosting-53356466/original/c24bd6f6-c0bb-4968-9abb-7ecb1c32063b.jpeg?im_w=720'
-  )
-);								
-INSERT INTO `media` VALUES (8,8, JSON_ARRAY(
-'https://a0.muscache.com/im/pictures/miso/Hosting-661994800564477473/original/1933dd1c-d29f-4cf5-98ab-0196863ff43f.jpeg?im_w=1200',
-'https://a0.muscache.com/im/pictures/miso/Hosting-661994800564477473/original/d09567cd-6e53-4b8e-a7ae-49cba492f3c4.jpeg?im_w=720',
-'https://a0.muscache.com/im/pictures/miso/Hosting-661994800564477473/original/4e4b11bd-4307-424e-a2bd-c83c7efcc791.jpeg?im_w=720',
-'https://a0.muscache.com/im/pictures/miso/Hosting-661994800564477473/original/59a40458-dea3-4afe-b16e-e5c7a219ca19.jpeg?im_w=720',
-'https://a0.muscache.com/im/pictures/miso/Hosting-661994800564477473/original/2edb699a-a49c-4d13-9140-2e8dfdbc23cd.jpeg?im_w=720'
-  )
-);								
-INSERT INTO `media` VALUES (9,9, JSON_ARRAY(
-'https://a0.muscache.com/im/pictures/2fa4e833-2f21-4808-ba57-8a303f7484c1.jpg?im_w=720',
-'https://a0.muscache.com/im/pictures/bfd54bdc-fda5-447b-afdd-8c25055ee643.jpg?im_w=720',
-'https://a0.muscache.com/im/pictures/22c000ca-7ef4-49fc-a79d-936fabe9f500.jpg?im_w=720',
-'https://a0.muscache.com/im/pictures/c90ce006-2d32-4e2d-bd97-22dcc0d76cb1.jpg?im_w=720',
-'https://a0.muscache.com/im/pictures/e6cfe881-996c-4361-9034-d9f491be9e45.jpg?im_w=720'
-  )
-);								
-INSERT INTO `media` VALUES (10,10, JSON_ARRAY(
-'https://a0.muscache.com/im/pictures/345e30d1-c294-4237-82d7-eccd5a6f2110.jpg?im_w=720',
-'https://a0.muscache.com/im/pictures/9be612e3-08c8-4ee7-a748-fbb5d4e7e400.jpg?im_w=720',
-'https://a0.muscache.com/im/pictures/ed5e1d2b-8d32-47de-81bc-d3420dcecb08.jpg?im_w=720',
-'https://a0.muscache.com/im/pictures/665a1bfe-e9f8-4f0e-b5db-ab18b80d7cf4.jpg?im_w=720',
-'https://a0.muscache.com/im/pictures/93e697c1-e149-4978-93be-f584f773c261.jpg?im_w=720'
-  )
-);								
+INSERT INTO `media` (advert_id, image_url)
+VALUES
+(1, 'https://a0.muscache.com/im/pictures/57e96162-6804-4773-bb59-dd5ca8e69e21.jpg?im_w=1200'),
+(1, 'https://a0.muscache.com/im/pictures/41a530cd-f0ea-4716-bf6c-9e4fd997804d.jpg?im_w=720'),
+(1, 'https://a0.muscache.com/im/pictures/e352de89-252f-436d-98ce-32517d8ffddf.jpg?im_w=720'),
+(1, 'https://a0.muscache.com/im/pictures/d1c3be0e-b743-4826-bcf7-83acb196a493.jpg?im_w=720'),
+(1, 'https://a0.muscache.com/im/pictures/44c4aaf6-3608-4f3c-8a2d-4318e9e47430.jpg?im_w=720');
+
+
+INSERT INTO `media` (advert_id, image_url)
+VALUES
+(2, 'https://a0.muscache.com/im/pictures/0d93e337-c49c-4bf5-83f4-982cb9f2e132.jpg?im_w=720'),
+(2, 'https://a0.muscache.com/im/pictures/661bf5d6-5f89-4ab6-8397-86e1002f2c2d.jpg?im_w=720'),
+(2, 'https://a0.muscache.com/im/pictures/5c9897c0-271e-4982-8392-da12c6ba373a.jpg?im_w=720'),
+(2, 'https://a0.muscache.com/im/pictures/79fb2c80-bf4d-4a7e-8f66-9011fb14d814.jpg?im_w=720'),
+(2, 'https://a0.muscache.com/im/pictures/c7a534fc-a289-4ca0-862b-282bad0b3487.jpg?im_w=720');
+
+INSERT INTO media (advert_id, image_url)
+VALUES
+(3, 'https://a0.muscache.com/im/pictures/3efc8fc3-0d9b-4ae3-a4ad-5acd2af63023.jpg?im_w=1200'),
+(3, 'https://a0.muscache.com/im/pictures/9e3f7acd-ca97-43fb-ab77-3e8284cbe489.jpg?im_w=720'),
+(3, 'https://a0.muscache.com/im/pictures/bda69a7d-fd27-4407-8370-e891bb5338aa.jpg?im_w=720'),
+(3, 'https://a0.muscache.com/im/pictures/67f7d021-b98f-4fa5-af13-f4aa13a38fd1.jpg?im_w=720'),
+(3, 'https://a0.muscache.com/im/pictures/fe8e1eab-bb75-4cb9-a735-64d2c74120d7.jpg?im_w=720'),
+
+(4, 'https://a0.muscache.com/im/pictures/c3fa3c40-4c21-4775-a478-599198f1979f.jpg?im_w=720'),
+(4, 'https://a0.muscache.com/im/pictures/809ca1df-4009-4c7d-bc76-700ced9610ba.jpg?im_w=720'),
+(4, 'https://a0.muscache.com/im/pictures/3ae268be-2695-4d3a-8b69-39c2178c7d08.jpg?im_w=720'),
+(4, 'https://a0.muscache.com/im/pictures/74da68ea-4ffc-49c4-ba76-c2b0817b6543.jpg?im_w=720'),
+(4, 'https://a0.muscache.com/im/pictures/40ab55f2-c0bf-4aee-8370-61d1044f5ec7.jpg?im_w=720');
+
+INSERT INTO media (advert_id, image_url)
+VALUES
+(5, 'https://a0.muscache.com/im/pictures/miso/Hosting-713793474951553871/original/467c73f5-711a-49c3-a358-bad81cfe4a02.jpeg?im_w=720'),
+(5, 'https://a0.muscache.com/im/pictures/miso/Hosting-713793474951553871/original/a5049cbc-82f5-43f7-b536-1298c93f9d64.jpeg?im_w=720'), 
+(5, 'https://a0.muscache.com/im/pictures/miso/Hosting-713793474951553871/original/06ec5b7b-0197-47f8-92e8-bffa074f9b1c.jpeg?im_w=720'), 
+(5, 'https://a0.muscache.com/im/pictures/miso/Hosting-713793474951553871/original/779aef02-d2da-476a-a79c-b63e1b7807d2.jpeg?im_w=720%27'),
+(6, 'https://a0.muscache.com/im/pictures/656a28c4-680c-437a-b6ab-2163176c6df4.jpg?im_w=720'),
+(6, 'https://a0.muscache.com/im/pictures/8a7b29a0-f5cc-4847-8cfa-f96a78b1e7be.jpg?im_w=720'),
+(6, 'https://a0.muscache.com/im/pictures/3833a9e9-8d47-46f4-b0f6-d4b8f7f4c4a4.jpg?im_w=720'),
+(6, 'https://a0.muscache.com/im/pictures/4b6c4b6e-8f3c-4c12-b7ff-d2b8a7ebe6c4.jpg?im_w=720'),
+(6, 'https://a0.muscache.com/im/pictures/24c5c1d1-ee2a-49dc-b5e5-0fdfc3e3e5b5.jpg?im_w=720'),
+(5, 'https://a0.muscache.com/im/pictures/miso/Hosting-713793474951553871/original/2ac03203-3d06-441c-bc82-77f28ac26c6a.jpeg?im_w=720'),
+(7, 'https://a0.muscache.com/im/pictures/e5dc5a5c-b8dd-4c79-832f-73b00ef9b5d5.jpg?im_w=720'),
+(7, 'https://a0.muscache.com/im/pictures/14ba87c8-bde0-4cb0-b270-87d200b08f53.jpg?im_w=720'),
+(7, 'https://a0.muscache.com/im/pictures/a1bbe686-d32d-4e7f-93b5-5b5e6d0f6e5c.jpg?im_w=720'),
+(7, 'https://a0.muscache.com/im/pictures/c5a4fbe2-9f1c-4cdd-b2e7-72fbbd3a7fda.jpg?im_w=720'),
+(7, 'https://a0.muscache.com/im/pictures/b7c33fff-4939-4787-9b2a-5d5ee5f5c542.jpg?im_w=720'),
+(8, 'https://a0.muscache.com/im/pictures/40cc8e55-a738-4ec2-b7a8-9b4e3f3c3e6f.jpg?im_w=720'),
+(8, 'https://a0.muscache.com/im/pictures/94453035/dd8f73d0_original.jpg?im_w=720'),
+(8, 'https://a0.muscache.com/im/pictures/94453148/c8414a1c_original.jpg?im_w=720'),
+(8, 'https://a0.muscache.com/im/pictures/94453320/9ea9c1d7_original.jpg?im_w=720'),
+(8, 'https://a0.muscache.com/im/pictures/94453357/8c7f7537_original.jpg?im_w=720'),
+(9, 'https://a0.muscache.com/im/pictures/8e7a0dcd-1a7c-4c5c-8c45-d36a38b7e8b6.jpg?im_w=720'),
+(9, 'https://a0.muscache.com/im/pictures/75b0f3a7-bcc5-4e5e-9191-5a97d5c0c543.jpg?im_w=720'),
+(9, 'https://a0.muscache.com/im/pictures/5da5c1a2-5f5c-4c4d-bc9e-b9a9b2d2c957.jpg?im_w=720'),
+(9, 'https://a0.muscache.com/im/pictures/c1117e31-7b65-4b0a-a2d6-daf8e2a6b9a6.jpg?im_w=720'),
+(9, 'https://a0.muscache.com/im/pictures/3d0945d3-a01b-4c14-aad2-1cbcbdd67e2f.jpg?im_w=720'),
+(10, 'https://a0.muscache.com/im/pictures/5f5b5aa5-b659-4068-89a2-8dd05540e4c4.jpg?im_w=720'),
+(10, 'https://a0.muscache.com/im/pictures/70b8fdd5-5b9e-4e71-bbd7-d15e20cc3f3c.jpg?im_w=720'),
+(10, 'https://a0.muscache.com/im/pictures/8c76d6dd-4a4e-4f2b-9c59-48d81e7e0d61.jpg?im_w=720'),
+(10, 'https://a0.muscache.com/im/pictures/b01a8b7e-e6a2-4a31-a00e-4f4c9af0ab2b.jpg?im_w=720'),
+(10, 'https://a0.muscache.com/im/pictures/f50ea91b-3d97-4ae8-8a36-b3704c29a2e2.jpg?im_w=720');
+
+
 
 						  
 INSERT INTO `reservations` VALUES (1,1,1,'1991-03-26 12:32:36','1989-03-02 22:42:06',584,'2002-05-09 01:34:50','1973-08-16 14:07:17',false),
