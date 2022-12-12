@@ -2,22 +2,31 @@ require("dotenv").config();
 const express = require("express");
 const mysql = require("mysql");
 const bodyParser = require("body-parser");
-const ejs = require("ejs")
+const session = require('express-session');
+const ejs = require("ejs");
 
 const conn = require("./dbService");
 const { response } = require("express");
 const app = express();
 
+app.use(session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true
+}));
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static("public"));
+app.use("/public",express.static("public"));
 app.set("view engine", "ejs");
+
+
 
 
 app.get("/", async (req, res) => {
     const allAdverts = []
-    conn.query("SELECT * FROM adverts INNER JOIN media on adverts.id=media.advert_id",(err,rows)=>{
+    conn.query("SELECT * FROM adverts INNER JOIN media ON adverts.id=media.advert_id",(err,rows)=>{
         if(!err){
             rows.forEach(RowDataPacket => {
                 allAdverts.push({
@@ -46,12 +55,9 @@ app.get("/evsahibi", (req, res) => {
 });
 
 
-app.post("/createUser" , async (req,res) => {
-    const name = req.body.name;
-    const password = req.body.password;
-    const email = req.body.email;
-    const phone_number =req.body.phone_number;
+app.post("/register" , async (req,res) => {
 
+    const {name, password, email, phone_number} = req.body;
     const sqlSearch = "SELECT * FROM users WHERE name = ?";
     const search_query = mysql.format(sqlSearch,[name]);
 
@@ -60,24 +66,34 @@ app.post("/createUser" , async (req,res) => {
 
     conn.query(search_query , async(err,result) => {
         if(err) throw (err);
-        console.log("------> Search Results");
-        console.log(result.length);
-
         if(result.length !=0){
-            console.log("------> User already exists");
+            console.log("User already exists");
             res.sendStatus(409) ;
-
         }
         else{
             conn.query(insert_query,(err,result)=> {
                 if(err) throw (err);
                 console.log(result.insertId);
                 res.sendStatus(201);
+                res.render("home" , {  message: "user created successfully"});
             });
         };
     });
 
 });
 
-//require("./routes/advert.routes.js")(app);
+app.post("/login", (req,res) => {
+    const {email, password} = req.body;
+    conn.query("SELECT * FROM users WHERE email = ? AND password = ?" , [email,password] , (err, result) => {
+        if(err) throw (err);
+        if(result.length > 0){
+            req.session.user = result[0];
+            res.send({ success: true });
+            res.render('home', { message: 'Login successful!' });
+        }
+        else{
+            res.send({ error: 'Invalid username or password.' });
+        }
+    });
+});
 app.listen(process.env.PORT, () => console.log("app is running"));
