@@ -52,7 +52,12 @@
               placeholder="Search For Your Dream Place"
             />
 
-            <button class="btn btn-outline-dark" id="searchBtn" type="submit">
+            <button
+              class="btn text-white"
+              style="background-color: #ff5a5f"
+              id="searchBtn"
+              type="submit"
+            >
               Search
             </button>
           </form>
@@ -124,7 +129,7 @@
     </header>
 
     <div class="container">
-      <h1>İlan başlığı (Bodrumda ev !! )</h1>
+      <h1><%= description %></h1>
       <span class="d-flex align-items-center justify-content-between">
         <span class="d-flex">
           <span id="star-icon" class="pe-1">&#9733;</span>
@@ -148,7 +153,7 @@
             Süper Ev Sahibi</span
           >
           <span class="pe-2">&bull;</span>
-          <span><a href="">Bodrum, Muğla, Türkiye</a></span>
+          <span><a href=""><%= address %></a></span>
         </span>
 
         <span class="d-flex">
@@ -204,32 +209,12 @@
       </span>
 
       <div class="advertPhotos mt-4 d-flex">
-        <img
-          src="https://cdn.ebaumsworld.com/thumbs/natural/gallery/1035099/85717647.jpg"
-          alt=""
-          class="bigImage"
-        />
+        <img src="<%=  image1 %>" alt="" class="bigImage" />
         <div class="ms-2">
-          <img
-            src="https://i.pinimg.com/custom_covers/222x/636415059782460318_1594662723.jpg"
-            alt=""
-            class="smallImage mx-1 my-1"
-          />
-          <img
-            src="https://cdn.ebaumsworld.com/mediaFiles/picture/1035099/85785795.jpg"
-            alt=""
-            class="smallImage mx-1 my-1"
-          />
-          <img
-            src="https://scontent.fadb4-1.fna.fbcdn.net/v/t1.6435-9/180978949_314228950059549_1005358403722529104_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=xw6XYIigq1AAX9Q1M6C&_nc_ht=scontent.fadb4-1.fna&oh=00_AfBDDrmM4TS4BMNKVEZF2ez-3TCTXnSJg5iplyzOJByLPA&oe=63B5B30E"
-            alt=""
-            class="smallImage mx-1 my-1"
-          />
-          <img
-            src="https://i.pinimg.com/736x/51/36/c6/5136c6170576624611319370a1ddd3a0.jpg"
-            alt=""
-            class="smallImage mx-1 my-1"
-          />
+          <img src="<%=  image2 %>" alt="" class="smallImage mx-1 my-1" />
+          <img src="<%=  image3 %>" alt="" class="smallImage mx-1 my-1" />
+          <img src="<%=  image4 %>" alt="" class="smallImage mx-1 my-1" />
+          <img src="<%=  image5 %>" alt="" class="smallImage mx-1 my-1" />
         </div>
       </div>
 
@@ -238,10 +223,10 @@
           <div class="border-bottom d-flex">
             <span class="advert-details" style="margin-right: 10em">
               <h4>Tüm Ev &bull; Ev Sahibi: {ilan veren kişi}</h4>
-              <span> 4 Misafir &bull; </span>
-              <span>1 Yatak Odası &bull;</span>
-              <span>2 Yatak &bull;</span>
-              <span>1 Banyo </span>
+              <span> <%= num_guests %> Misafir &bull; </span>
+              <span><%= total_bedrooms %> Yatak Odası &bull;</span>
+              <!-- <span>2 Yatak &bull;</span> -->
+              <span><%= total_bathrooms %> Banyo </span>
             </span>
             <span class="user-image">
               <img
@@ -266,7 +251,11 @@
                     d="M2.5 13.5A.5.5 0 0 1 3 13h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zM13.991 3l.024.001a1.46 1.46 0 0 1 .538.143.757.757 0 0 1 .302.254c.067.1.145.277.145.602v5.991l-.001.024a1.464 1.464 0 0 1-.143.538.758.758 0 0 1-.254.302c-.1.067-.277.145-.602.145H2.009l-.024-.001a1.464 1.464 0 0 1-.538-.143.758.758 0 0 1-.302-.254C1.078 10.502 1 10.325 1 10V4.009l.001-.024a1.46 1.46 0 0 1 .143-.538.758.758 0 0 1 .254-.302C1.498 3.078 1.675 3 2 3h11.991zM14 2H2C0 2 0 4 0 4v6c0 2 2 2 2 2h12c2 0 2-2 2-2V4c0-2-2-2-2-2z"
                   />
                 </svg>
-                <span>Tevelizyonu var</span>
+
+                <span>
+                  <% if(has_tv == 1){ %> Televizyonu Var <% } else{ %>
+                  Televizyonu Yok <% } %>
+                </span>
               </span>
               <span class="kitchenSymbol">
                 <svg
@@ -281,7 +270,10 @@
                     d="M8 15a5 5 0 0 1-5-5c0-1.956.69-4.286 1.742-6.12.524-.913 1.112-1.658 1.704-2.164C7.044 1.206 7.572 1 8 1c.428 0 .956.206 1.554.716.592.506 1.18 1.251 1.704 2.164C12.31 5.714 13 8.044 13 10a5 5 0 0 1-5 5zm0 1a6 6 0 0 0 6-6c0-4.314-3-10-6-10S2 5.686 2 10a6 6 0 0 0 6 6z"
                   />
                 </svg>
-                <span>Mutfağı Var</span>
+                <span>
+                  <% if(has_kitchen == 1){ %> Mutfağı Var <% } else{ %> Mutfağı
+                  Yok <% } %>
+                </span>
               </span>
             </div>
             <div class="d-flex justify-content-between mb-3">
@@ -301,7 +293,10 @@
                     d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14Zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16Z"
                   />
                 </svg>
-                <span>Kliması Var</span>
+                <span>
+                  <% if(has_air_con == 1){ %> Kliması Var <% } else{ %> Kliması
+                  Yok <% } %>
+                </span>
               </span>
               <span class="heatingSymbol">
                 <svg
@@ -316,7 +311,10 @@
                     d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16Zm0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15Z"
                   />
                 </svg>
-                <span>Isıtması Var</span>
+                <span>
+                  <% if(has_heating == 1){ %> Isıtması Var <% } else{ %>
+                  Isıtması Yok <% } %>
+                </span>
               </span>
             </div>
             <div class="d-flex justify-content-between mb-3">
@@ -336,7 +334,10 @@
                     d="M13.229 8.271a.482.482 0 0 0-.063-.745A9.455 9.455 0 0 0 8 6c-1.905 0-3.68.56-5.166 1.526a.48.48 0 0 0-.063.745.525.525 0 0 0 .652.065A8.46 8.46 0 0 1 8 7a8.46 8.46 0 0 1 4.576 1.336c.206.132.48.108.653-.065zm-2.183 2.183c.226-.226.185-.605-.1-.75A6.473 6.473 0 0 0 8 9c-1.06 0-2.062.254-2.946.704-.285.145-.326.524-.1.75l.015.015c.16.16.407.19.611.09A5.478 5.478 0 0 1 8 10c.868 0 1.69.201 2.42.56.203.1.45.07.61-.091l.016-.015zM9.06 12.44c.196-.196.198-.52-.04-.66A1.99 1.99 0 0 0 8 11.5a1.99 1.99 0 0 0-1.02.28c-.238.14-.236.464-.04.66l.706.706a.5.5 0 0 0 .707 0l.707-.707z"
                   />
                 </svg>
-                <span>İnterneti Var</span>
+                <span>
+                  <% if(has_internet == 1){ %> İnterneti Var <% } else{ %>
+                  İnterneti Yok <% } %>
+                </span>
               </span>
             </div>
           </div>
@@ -346,7 +347,7 @@
             class="map-container d-flex justify-content-strech align-items-strech"
           >
             <iframe
-              src="https://maps.google.com/maps?q=izmir&t=&z=13&ie=UTF8&iwloc=&output=embed"
+              src="https://maps.google.com/maps?q=<%= address %>&t=&z=13&ie=UTF8&iwloc=&output=embed"
               frameborder="0"
               style="border: 0"
               allowfullscreen
@@ -359,7 +360,9 @@
         </div>
         <span class="payment-details border shadow p-3 mb-5 bg-body rounded">
           <span class="price">
-            <span class="fw-bold fs-4 pe-1">800 ₺</span>
+            <span id="34_asaf" class="fw-bold fs-4 pe-1"
+              ><%= price_per_day %> ₺</span
+            >
             gece
           </span>
           <span>&#9733;</span>
@@ -372,6 +375,7 @@
                 class="form-control"
                 name="girisTarihi"
                 id="girisTarihi"
+                onchange="checkDateFormat(document.getElementById('girisTarihi').value,document.getElementById('cikisTarihi').value)"
               />
               <label for="girisTarihi">Giriş Tarihi</label>
             </div>
@@ -381,48 +385,59 @@
                 class="form-control"
                 name="cikisTarihi"
                 id="cikisTarihi"
+                onchange="checkDateFormat(document.getElementById('cikisTarihi').value,document.getElementById('girisTarihi').value)"
               />
               <label for="cikisTarihi">Çıkış Tarihi</label>
             </div>
           </div>
           <div class="form-floating">
-            <input
-              class="form-control"
-              placeholder="Leave a comment here"
-              id="floatingTextarea"
-              type="text"
-            />
+            <input class="form-control" id="floatingTextarea" type="text" />
             <label for="floatingTextarea">Misafir Sayısı</label>
           </div>
 
           <div class="d-grid mt-3">
             <button
+              id="rezerveEtButonu"
               style="background-color: #ff5a5f"
               type="button"
               class="btn text-white"
+              disabled
+              onclick="calculateDateDifference(document.getElementById('cikisTarihi').value,document.getElementById('girisTarihi').value)"
             >
-              Rezerve Edin
+              Ücretleri Göster
             </button>
           </div>
 
-          <div class="prices p-2 mt-3">
+          <div id="prices" class="prices p-2 mt-3">
             <div class="d-flex justify-content-between mb-2">
-              <span>800 ₺ x 5 gece</span>
-              <span id="kalmaBedeli"> 4000 ₺</span>
+              <span id="kalmaBedeli"
+                ><%= price_per_day %> ₺ x <span id="nightCount"></span
+              ></span>
+              <span id="kalmaBedeliToplam"></span>
             </div>
 
             <div class="d-flex justify-content-between mb-2">
               <span>Temizlik ücreti</span>
-              <span id="temizlikBedeli"> 200 ₺</span>
+              <span id="temizlikBedeli">200 ₺</span>
             </div>
             <div class="d-flex justify-content-between">
               <span>Hizmet Bedeli</span>
-              <span id="hizmetBedeli"> 816 ₺</span>
+              <span id="hizmetBedeli">816 ₺</span>
             </div>
             <hr />
             <div class="d-flex justify-content-between fw-bold">
               <span>Vergiler Hariç Toplam</span>
-              <span id="toplamBedel"> Topla her şeyi ₺</span>
+              <span id="toplamBedel"></span>
+            </div>
+            <div class="d-grid mt-3">
+              <button
+                id="goToPayment"
+                style="background-color: #ff5a5f"
+                type="button"
+                class="btn text-white"
+              >
+                Rezervasyon Yap
+              </button>
             </div>
           </div>
         </span>
@@ -439,5 +454,7 @@
       integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
       crossorigin="anonymous"
     ></script>
+    <script src="/checkDateFormat.js"></script>
+    <script src="/calculateDateDifference.js"></script>
   </body>
 </html>

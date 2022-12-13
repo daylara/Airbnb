@@ -1,2 +1,4 @@
-her ilana 5 foto lazım one göre tabloyu değiştirmek lazım
-ilanın idsini kullanarak foto çekmemiz lazım
+fotoğrafların boyutları ayarlanmalı
+ratingler çekilip koyulcak
+değerlendirmeler koyulacak
+payment sayfasını modal içine al
