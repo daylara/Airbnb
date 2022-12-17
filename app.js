@@ -38,7 +38,7 @@ app.get("/", async (req, res) => {
                 });
                
           });  
-          console.log(allAdverts);
+          //console.log(allAdverts);
           res.render("home",{adverts:allAdverts});
         }
         else
@@ -46,6 +46,8 @@ app.get("/", async (req, res) => {
     })
 });
     
+
+
 app.get("/ilan/:id", (req, res) => {
     conn.query(`SELECT description,address FROM adverts ` )
     res.render("advert");
@@ -55,32 +57,27 @@ app.get("/evsahibi", (req, res) => {
 });
 
 
-app.post("/register" , async (req,res) => {
 
-    const {name, password, email, phone_number} = req.body;
-    const sqlSearch = "SELECT * FROM users WHERE name = ?";
-    const search_query = mysql.format(sqlSearch,[name]);
-
-    const sqlInsert = "INSERT INTO users (name , email, password , phone_number) VALUES (?,?,?,?)";
-    const insert_query =mysql.format(sqlInsert,[name,email,password,phone_number]);
-
-    conn.query(search_query , async(err,result) => {
-        if(err) throw (err);
-        if(result.length !=0){
-            console.log("User already exists");
-            res.sendStatus(409) ;
-        }
-        else{
-            conn.query(insert_query,(err,result)=> {
-                if(err) throw (err);
-                console.log(result.insertId);
-                res.sendStatus(201);
-                res.render("home" , {  message: "user created successfully"});
-            });
-        };
-    });
-
+app.post('/register', (req, res) => {
+    const { name, password, email } = req.body;
+    if (!name || !password || !email) {
+        res.json({ success: false, message: 'All fields are required.' });
+    }
+    else {
+        conn.query('INSERT IGNORE INTO users (name, password, email) VALUES (?, ?, ?)', [name, password, email], (error, results) => {
+            if (error) {
+                throw error;
+            }
+            else if (results.affectedRows === 0){
+                res.json({ success: false, message: 'User with this email already exists.' });
+            }
+            else {
+                res.json({ success: true });
+            }
+        });
+    }
 });
+
 
 app.post("/login", (req,res) => {
     const {email, password} = req.body;
@@ -89,11 +86,11 @@ app.post("/login", (req,res) => {
         if(result.length > 0){
             req.session.user = result[0];
             res.send({ success: true });
-            res.render('home', { message: 'Login successful!' });
         }
         else{
-            res.send({ error: 'Invalid username or password.' });
+            res.json({ success: false, message: 'Invalid email or password.' });
         }
     });
 });
+
 app.listen(process.env.PORT, () => console.log("app is running"));
