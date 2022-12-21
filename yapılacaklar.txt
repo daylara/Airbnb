@@ -1,4 +1,2 @@
-fotoğrafların boyutları ayarlanmalı
 ratingler çekilip koyulcak
 değerlendirmeler koyulacak
-payment sayfasını modal içine al
