@@ -22,4 +22,13 @@ function calculateDateDifference(date1, date2) {
   console.log(hizmetBedeli);
   // set toplamBedel to hizmetBedeli + temizlikBedeli + gunlukPrice * differenceInDays
   document.getElementById("toplamBedel").innerHTML = `${Number(temizlikBedeli) + Number(hizmetBedeli) + Number(gunlukPrice * differenceInDays)} ₺`;
+
+  document.getElementById("output").innerHTML =  `${document.getElementById("girisTarihi").value} - ${document.getElementById("cikisTarihi").value}`
+  document.getElementById("output2").innerHTML = `${document.getElementById("floatingTextarea").value} Misafir`;
+  document.getElementById("output3").innerHTML = `${differenceInDays} Gece`;
+  document.getElementById("output4").innerHTML = `${
+    Number(temizlikBedeli) +
+    Number(hizmetBedeli) +
+    Number(gunlukPrice * differenceInDays)
+  } ₺`;
 }

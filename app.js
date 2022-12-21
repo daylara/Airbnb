@@ -68,5 +68,8 @@ app.get("/ilan/:id", (req, res) => {
 app.get("/evsahibi", (req, res) => {
     res.render("evsahibi")
     });
+app.get("/payment", (req, res) => {
+    res.render("payment")
+    });
 
 app.listen(process.env.PORT, () => console.log("app is running"));

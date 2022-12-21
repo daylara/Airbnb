@@ -12,6 +12,7 @@
     />
     <link rel="stylesheet" href="/home.css" />
     <link rel="stylesheet" href="/listing.css" />
+
     <title>İlan</title>
   </head>
   <body>
@@ -430,18 +431,216 @@
               <span id="toplamBedel"></span>
             </div>
             <div class="d-grid mt-3">
-              <button
+              <a
                 id="goToPayment"
                 style="background-color: #ff5a5f"
                 type="button"
                 class="btn text-white"
+                href="/payment"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
               >
                 Rezervasyon Yap
-              </button>
+              </a>
             </div>
           </div>
         </span>
       </span>
+    </div>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+
+<section>
+
+    <div class="container d-flex align-items-center">
+      <h1>Confirm and pay</h1>
+    </div>
+
+
+    <div class="container ">
+      <h1 style=" font-size:30px;">Your Trip</h1>
+      <div class="container d-flex">
+        <div class="p-2 w-25">
+          <h2>Dates</h2>
+          <div id="output"></div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="p-2 w-25  bd-highlight">
+          <h2>Guests
+          </h2>
+          <div id="output2"></div>
+        </div>
+      </div>
+      <hr class="dashed">
+    </div>
+
+    <div class="container d-flex">
+
+      <!--ödeme bilgileri-->
+      <div class="container">
+        <h1 style="font-size: 28px;">
+          Pay With
+        </h1>
+        <span role="img" aria-label="Visa Card"><img
+            src="https://a0.muscache.com/airbnb/static/packages/assets/frontend/legacy-shared/svgs/payments/logo_visa.0adea522bb26bd90821a8fade4911913.svg"
+            alt="Visa Card" height="9" aria-hidden="true"></span>
+        <span role="img" aria-label="American Express Card"><img
+            src="https://a0.muscache.com/airbnb/static/packages/assets/frontend/legacy-shared/svgs/payments/logo_amex.84088b520ca1b3384cb71398095627da.svg"
+            alt="American Express Card" height="9" aria-hidden="true"></span>
+        <span role="img" aria-label="Mastercard"><img
+            src="https://a0.muscache.com/airbnb/static/packages/assets/frontend/legacy-shared/svgs/payments/logo_mastercard.f18379cf1f27d22abd9e9cf44085d149.svg"
+            alt="Mastercard" height="9" aria-hidden="true"></span>
+        <span role="img" aria-label="Google Pay"><img
+            src="https://a0.muscache.com/airbnb/static/packages/assets/frontend/legacy-shared/svgs/payments/logo_googlepay.3f786bc031b59575d24f504dfb859da0.svg"
+            alt="Google Pay" height="9" aria-hidden="true"></span>
+        <form id="payment-form">
+          <div class="form-group">
+            <label for="code">Booking Code</label>
+            <input type="text" class="form-control" id="code" value="HM8P94HMKW">
+          </div>
+          <div class="form-group">
+            <label for="payWith">Pay With</label>
+            <select class="form-control" id="payWith">
+              <option value="credit_card">Credit Card</option>
+              <option value="paypal">PayPal</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="cardNumber">Card Number</label>
+            <input type="text" class="form-control" id="cardNumber" placeholder="Enter card number">
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="cardExpiration">Expiration Date</label>
+              <input type="month" class="form-control" id="cardExpiration">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="cardCVV">CVV</label>
+              <input type="text" class="form-control" id="cardCVV" placeholder="Enter CVV">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="cardHolderName">Card Holder Name</label>
+            <input type="text" class="form-control" id="cardHolderName" placeholder="Enter card holder name">
+          </div>
+        </form>
+  
+        <hr class="dashed">
+        <h1 style="font-size: 28px;">
+          Cancellation policy</h1>
+        <h1 style="font-size: 14px;">This reservation is non-refundable. Learn more</h4>
+          <hr class="dashed">
+          <h1 style="font-size: 28px;">
+            Ground rules</h1>
+          <h1 style="font-size: 14px;">We ask every guest to remember a few simple things about what makes a great
+            guest.<br>Follow the house rules.<br>Treat your Host’s home like your own
+  
+            </h4>
+            <hr class="dashed">
+            <div style="display:flex;flex-direction:row">
+              <span role="img"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+                  role="presentation" focusable="false"
+                  style="display: block; height: 32px; width: 32px; fill: rgb(227, 28, 95); stroke: currentcolor;">
+                  <g>
+                    <g stroke="none">
+                      <path
+                        d="M43 8v21.295L32.295 40l-10.359.001A11.971 11.971 0 0 0 26 31c0-6.627-5.373-12-12-12a12.02 12.02 0 0 0-3.001.378L11 8h32z"
+                        fill-opacity=".2"></path>
+                      <path
+                        d="M32 42v-8a5 5 0 0 1 4.783-4.995L37 29h8V6H34v2h-2V6H22v2h-2V6H9v14.5H7V6a2 2 0 0 1 1.85-1.995L9 4h11V2h2v2h10V2h2v2h11a2 2 0 0 1 1.995 1.85L47 6v24.953L33.953 44H15v-2h17zm12.123-11H37a3 3 0 0 0-2.995 2.824L34 34v7.122L44.123 31z">
+                      </path>
+                    </g>
+                    <g fill="none" stroke-width="2">
+                      <path
+                        d="M14 43c.328 0 .653-.013.974-.039C21.146 42.465 26 37.299 26 31c0-6.627-5.373-12-12-12A11.995 11.995 0 0 0 2 31c0 6.627 5.373 12 12 12z">
+                      </path>
+                      <path d="M23 31h-9v-9"></path>
+                    </g>
+                  </g>
+                </svg></span>
+  
+              <h1 style="font-size: 14px;">
+                Your reservation won’t be confirmed until the Host accepts your request (within 24 hours).</h1>
+            </div>
+            <button type="button" class="btn btn-danger" onclick="validatePaymentForm()">Request to Book</button>
+  
+  
+      </div>
+      <!--pprduct bilgileir-->
+      <div class="container">
+  
+        <div class="card">
+          <div class="card-header" style="display:flex;flex-direction:row">
+            <img class="_6tbg2q d-block " aria-hidden="true" elementtiming="LCP-target" fetchpriority="high"
+              id="FMP-target" loading="eager"
+              src="https://a0.muscache.com/im/pictures/e25a9b25-fa98-4160-bfd1-039287bf38b6.jpg?im_w=720"
+              data-original-uri="https://a0.muscache.com/im/pictures/e25a9b25-fa98-4160-bfd1-039287bf38b6.jpg?im_w=720"
+              style="border-radius:20px ;object-fit: cover; vertical-align: bottom;width : 160px; height:160">
+  
+            <div style="display:flex;flex-direction:column" class="ms-2">
+              <h3>Castle</h3>
+              <p>Private Group Stay in Exclusive Fairytale Castle</p>
+              <p class="text-muted">5.00 (9 reviews)</h4>
+  
+            </div>
+  
+          </div>
+  
+  
+          <div class="card-body">
+  
+            <div role="img" aria-label="Your booking is protected by AirCover" class="d-flex flex-row align-items-center">
+              Your booking is protected by <div><img
+                  src="https://a0.muscache.com/pictures/aircover/aircover-logo/original/56683a2f-f11b-43f6-8af7-a1b3861b2c85.svg"
+                  alt="AirCover"></div>
+            </div>
+            <hr class="dashed">
+  
+  
+            <h5>Price Details</h5>
+            <table class="table">
+              <tr>
+                <td>Day Price</td>
+                <td><%= price_per_day %> ₺</td>
+              </tr>
+             
+              <tr>
+                <td>Total Days</td>
+                <td><div id="output3"></div></td>
+              </tr>
+              <tr>
+                <td>Total Price</td>
+                <td> <div id="output4"></div></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script
@@ -456,5 +655,6 @@
     ></script>
     <script src="/checkDateFormat.js"></script>
     <script src="/calculateDateDifference.js"></script>
+    <script src="/payment.js"></script>
   </body>
 </html>
