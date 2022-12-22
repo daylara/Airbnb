@@ -35,11 +35,41 @@ app.get("/", async (req, res) => {
     })
     });
 app.get("/ilan/:id", (req, res) => {
-    conn.query(`SELECT description,address FROM adverts ` )
-    res.render("advert");
+    const ilanID = req.params.id;
+    conn.query(
+      `SELECT * FROM adverts INNER JOIN house ON adverts.house_id = house.id INNER JOIN media ON adverts.id = media.advert_id WHERE adverts.id = ${ilanID}`,
+      (err, rows) => {
+    
+        if (!err) {
+          res.render("advert", {
+            price_per_day: rows[0].price_per_day,
+            description: rows[0].description,
+            address: rows[0].address,
+            image1: rows[0].image_url,
+            image2: rows[1].image_url,
+            image3: rows[2].image_url,
+            image4: rows[3].image_url,
+            image5: rows[4].image_url,
+            city_id: rows[0].city_id,
+            total_bedrooms: rows[0].total_bedrooms,
+            total_bathrooms: rows[0].total_bathrooms,
+            num_guests: rows[0].num_guests,
+            has_tv: rows[0].has_tv,
+            has_kitchen: rows[0].has_kitchen,
+            has_air_con: rows[0].has_air_con,
+            has_heating: rows[0].has_heating,
+            has_internet: rows[0].has_internet,
+          });
+          console.log(rows);
+        } else console.log(err);
+      }
+    );
     });
 app.get("/evsahibi", (req, res) => {
     res.render("evsahibi")
+    });
+app.get("/payment", (req, res) => {
+    res.render("payment")
     });
 
 app.listen(process.env.PORT, () => console.log("app is running"));

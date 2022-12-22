@@ -12,6 +12,7 @@
     />
     <link rel="stylesheet" href="/home.css" />
     <link rel="stylesheet" href="/listing.css" />
+
     <title>İlan</title>
   </head>
   <body>
@@ -52,7 +53,12 @@
               placeholder="Search For Your Dream Place"
             />
 
-            <button class="btn btn-outline-dark" id="searchBtn" type="submit">
+            <button
+              class="btn text-white"
+              style="background-color: #ff5a5f"
+              id="searchBtn"
+              type="submit"
+            >
               Search
             </button>
           </form>
@@ -124,7 +130,7 @@
     </header>
 
     <div class="container">
-      <h1>İlan başlığı (Bodrumda ev !! )</h1>
+      <h1><%= description %></h1>
       <span class="d-flex align-items-center justify-content-between">
         <span class="d-flex">
           <span id="star-icon" class="pe-1">&#9733;</span>
@@ -148,7 +154,7 @@
             Süper Ev Sahibi</span
           >
           <span class="pe-2">&bull;</span>
-          <span><a href="">Bodrum, Muğla, Türkiye</a></span>
+          <span><a href=""><%= address %></a></span>
         </span>
 
         <span class="d-flex">
@@ -204,32 +210,12 @@
       </span>
 
       <div class="advertPhotos mt-4 d-flex">
-        <img
-          src="https://cdn.ebaumsworld.com/thumbs/natural/gallery/1035099/85717647.jpg"
-          alt=""
-          class="bigImage"
-        />
+        <img src="<%=  image1 %>" alt="" class="bigImage" />
         <div class="ms-2">
-          <img
-            src="https://i.pinimg.com/custom_covers/222x/636415059782460318_1594662723.jpg"
-            alt=""
-            class="smallImage mx-1 my-1"
-          />
-          <img
-            src="https://cdn.ebaumsworld.com/mediaFiles/picture/1035099/85785795.jpg"
-            alt=""
-            class="smallImage mx-1 my-1"
-          />
-          <img
-            src="https://scontent.fadb4-1.fna.fbcdn.net/v/t1.6435-9/180978949_314228950059549_1005358403722529104_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=xw6XYIigq1AAX9Q1M6C&_nc_ht=scontent.fadb4-1.fna&oh=00_AfBDDrmM4TS4BMNKVEZF2ez-3TCTXnSJg5iplyzOJByLPA&oe=63B5B30E"
-            alt=""
-            class="smallImage mx-1 my-1"
-          />
-          <img
-            src="https://i.pinimg.com/736x/51/36/c6/5136c6170576624611319370a1ddd3a0.jpg"
-            alt=""
-            class="smallImage mx-1 my-1"
-          />
+          <img src="<%=  image2 %>" alt="" class="smallImage mx-1 my-1" />
+          <img src="<%=  image3 %>" alt="" class="smallImage mx-1 my-1" />
+          <img src="<%=  image4 %>" alt="" class="smallImage mx-1 my-1" />
+          <img src="<%=  image5 %>" alt="" class="smallImage mx-1 my-1" />
         </div>
       </div>
 
@@ -238,10 +224,10 @@
           <div class="border-bottom d-flex">
             <span class="advert-details" style="margin-right: 10em">
               <h4>Tüm Ev &bull; Ev Sahibi: {ilan veren kişi}</h4>
-              <span> 4 Misafir &bull; </span>
-              <span>1 Yatak Odası &bull;</span>
-              <span>2 Yatak &bull;</span>
-              <span>1 Banyo </span>
+              <span> <%= num_guests %> Misafir &bull; </span>
+              <span><%= total_bedrooms %> Yatak Odası &bull;</span>
+              <!-- <span>2 Yatak &bull;</span> -->
+              <span><%= total_bathrooms %> Banyo </span>
             </span>
             <span class="user-image">
               <img
@@ -266,7 +252,11 @@
                     d="M2.5 13.5A.5.5 0 0 1 3 13h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zM13.991 3l.024.001a1.46 1.46 0 0 1 .538.143.757.757 0 0 1 .302.254c.067.1.145.277.145.602v5.991l-.001.024a1.464 1.464 0 0 1-.143.538.758.758 0 0 1-.254.302c-.1.067-.277.145-.602.145H2.009l-.024-.001a1.464 1.464 0 0 1-.538-.143.758.758 0 0 1-.302-.254C1.078 10.502 1 10.325 1 10V4.009l.001-.024a1.46 1.46 0 0 1 .143-.538.758.758 0 0 1 .254-.302C1.498 3.078 1.675 3 2 3h11.991zM14 2H2C0 2 0 4 0 4v6c0 2 2 2 2 2h12c2 0 2-2 2-2V4c0-2-2-2-2-2z"
                   />
                 </svg>
-                <span>Tevelizyonu var</span>
+
+                <span>
+                  <% if(has_tv == 1){ %> Televizyonu Var <% } else{ %>
+                  Televizyonu Yok <% } %>
+                </span>
               </span>
               <span class="kitchenSymbol">
                 <svg
@@ -281,7 +271,10 @@
                     d="M8 15a5 5 0 0 1-5-5c0-1.956.69-4.286 1.742-6.12.524-.913 1.112-1.658 1.704-2.164C7.044 1.206 7.572 1 8 1c.428 0 .956.206 1.554.716.592.506 1.18 1.251 1.704 2.164C12.31 5.714 13 8.044 13 10a5 5 0 0 1-5 5zm0 1a6 6 0 0 0 6-6c0-4.314-3-10-6-10S2 5.686 2 10a6 6 0 0 0 6 6z"
                   />
                 </svg>
-                <span>Mutfağı Var</span>
+                <span>
+                  <% if(has_kitchen == 1){ %> Mutfağı Var <% } else{ %> Mutfağı
+                  Yok <% } %>
+                </span>
               </span>
             </div>
             <div class="d-flex justify-content-between mb-3">
@@ -301,7 +294,10 @@
                     d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14Zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16Z"
                   />
                 </svg>
-                <span>Kliması Var</span>
+                <span>
+                  <% if(has_air_con == 1){ %> Kliması Var <% } else{ %> Kliması
+                  Yok <% } %>
+                </span>
               </span>
               <span class="heatingSymbol">
                 <svg
@@ -316,7 +312,10 @@
                     d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16Zm0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15Z"
                   />
                 </svg>
-                <span>Isıtması Var</span>
+                <span>
+                  <% if(has_heating == 1){ %> Isıtması Var <% } else{ %>
+                  Isıtması Yok <% } %>
+                </span>
               </span>
             </div>
             <div class="d-flex justify-content-between mb-3">
@@ -336,7 +335,10 @@
                     d="M13.229 8.271a.482.482 0 0 0-.063-.745A9.455 9.455 0 0 0 8 6c-1.905 0-3.68.56-5.166 1.526a.48.48 0 0 0-.063.745.525.525 0 0 0 .652.065A8.46 8.46 0 0 1 8 7a8.46 8.46 0 0 1 4.576 1.336c.206.132.48.108.653-.065zm-2.183 2.183c.226-.226.185-.605-.1-.75A6.473 6.473 0 0 0 8 9c-1.06 0-2.062.254-2.946.704-.285.145-.326.524-.1.75l.015.015c.16.16.407.19.611.09A5.478 5.478 0 0 1 8 10c.868 0 1.69.201 2.42.56.203.1.45.07.61-.091l.016-.015zM9.06 12.44c.196-.196.198-.52-.04-.66A1.99 1.99 0 0 0 8 11.5a1.99 1.99 0 0 0-1.02.28c-.238.14-.236.464-.04.66l.706.706a.5.5 0 0 0 .707 0l.707-.707z"
                   />
                 </svg>
-                <span>İnterneti Var</span>
+                <span>
+                  <% if(has_internet == 1){ %> İnterneti Var <% } else{ %>
+                  İnterneti Yok <% } %>
+                </span>
               </span>
             </div>
           </div>
@@ -346,7 +348,7 @@
             class="map-container d-flex justify-content-strech align-items-strech"
           >
             <iframe
-              src="https://maps.google.com/maps?q=izmir&t=&z=13&ie=UTF8&iwloc=&output=embed"
+              src="https://maps.google.com/maps?q=<%= address %>&t=&z=13&ie=UTF8&iwloc=&output=embed"
               frameborder="0"
               style="border: 0"
               allowfullscreen
@@ -359,7 +361,9 @@
         </div>
         <span class="payment-details border shadow p-3 mb-5 bg-body rounded">
           <span class="price">
-            <span class="fw-bold fs-4 pe-1">800 ₺</span>
+            <span id="34_asaf" class="fw-bold fs-4 pe-1"
+              ><%= price_per_day %> ₺</span
+            >
             gece
           </span>
           <span>&#9733;</span>
@@ -372,6 +376,7 @@
                 class="form-control"
                 name="girisTarihi"
                 id="girisTarihi"
+                onchange="checkDateFormat(document.getElementById('girisTarihi').value,document.getElementById('cikisTarihi').value)"
               />
               <label for="girisTarihi">Giriş Tarihi</label>
             </div>
@@ -381,52 +386,261 @@
                 class="form-control"
                 name="cikisTarihi"
                 id="cikisTarihi"
+                onchange="checkDateFormat(document.getElementById('cikisTarihi').value,document.getElementById('girisTarihi').value)"
               />
               <label for="cikisTarihi">Çıkış Tarihi</label>
             </div>
           </div>
           <div class="form-floating">
-            <input
-              class="form-control"
-              placeholder="Leave a comment here"
-              id="floatingTextarea"
-              type="text"
-            />
+            <input class="form-control" id="floatingTextarea" type="text" />
             <label for="floatingTextarea">Misafir Sayısı</label>
           </div>
 
           <div class="d-grid mt-3">
             <button
+              id="rezerveEtButonu"
               style="background-color: #ff5a5f"
               type="button"
               class="btn text-white"
+              disabled
+              onclick="calculateDateDifference(document.getElementById('cikisTarihi').value,document.getElementById('girisTarihi').value)"
             >
-              Rezerve Edin
+              Ücretleri Göster
             </button>
           </div>
 
-          <div class="prices p-2 mt-3">
+          <div id="prices" class="prices p-2 mt-3">
             <div class="d-flex justify-content-between mb-2">
-              <span>800 ₺ x 5 gece</span>
-              <span id="kalmaBedeli"> 4000 ₺</span>
+              <span id="kalmaBedeli"
+                ><%= price_per_day %> ₺ x <span id="nightCount"></span
+              ></span>
+              <span id="kalmaBedeliToplam"></span>
             </div>
 
             <div class="d-flex justify-content-between mb-2">
               <span>Temizlik ücreti</span>
-              <span id="temizlikBedeli"> 200 ₺</span>
+              <span id="temizlikBedeli">200 ₺</span>
             </div>
             <div class="d-flex justify-content-between">
               <span>Hizmet Bedeli</span>
-              <span id="hizmetBedeli"> 816 ₺</span>
+              <span id="hizmetBedeli">816 ₺</span>
             </div>
             <hr />
             <div class="d-flex justify-content-between fw-bold">
               <span>Vergiler Hariç Toplam</span>
-              <span id="toplamBedel"> Topla her şeyi ₺</span>
+              <span id="toplamBedel"></span>
+            </div>
+            <div class="d-grid mt-3">
+              <a
+                id="goToPayment"
+                style="background-color: #ff5a5f"
+                type="button"
+                class="btn text-white"
+                href="/payment"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+              >
+                Rezervasyon Yap
+              </a>
             </div>
           </div>
         </span>
       </span>
+    </div>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+
+<section>
+
+    <div class="container d-flex align-items-center">
+      <h1>Confirm and pay</h1>
+    </div>
+
+
+    <div class="container ">
+      <h1 style=" font-size:30px;">Your Trip</h1>
+      <div class="container d-flex">
+        <div class="p-2 w-25">
+          <h2>Dates</h2>
+          <div id="output"></div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="p-2 w-25  bd-highlight">
+          <h2>Guests
+          </h2>
+          <div id="output2"></div>
+        </div>
+      </div>
+      <hr class="dashed">
+    </div>
+
+    <div class="container d-flex">
+
+      <!--ödeme bilgileri-->
+      <div class="container">
+        <h1 style="font-size: 28px;">
+          Pay With
+        </h1>
+        <span role="img" aria-label="Visa Card"><img
+            src="https://a0.muscache.com/airbnb/static/packages/assets/frontend/legacy-shared/svgs/payments/logo_visa.0adea522bb26bd90821a8fade4911913.svg"
+            alt="Visa Card" height="9" aria-hidden="true"></span>
+        <span role="img" aria-label="American Express Card"><img
+            src="https://a0.muscache.com/airbnb/static/packages/assets/frontend/legacy-shared/svgs/payments/logo_amex.84088b520ca1b3384cb71398095627da.svg"
+            alt="American Express Card" height="9" aria-hidden="true"></span>
+        <span role="img" aria-label="Mastercard"><img
+            src="https://a0.muscache.com/airbnb/static/packages/assets/frontend/legacy-shared/svgs/payments/logo_mastercard.f18379cf1f27d22abd9e9cf44085d149.svg"
+            alt="Mastercard" height="9" aria-hidden="true"></span>
+        <span role="img" aria-label="Google Pay"><img
+            src="https://a0.muscache.com/airbnb/static/packages/assets/frontend/legacy-shared/svgs/payments/logo_googlepay.3f786bc031b59575d24f504dfb859da0.svg"
+            alt="Google Pay" height="9" aria-hidden="true"></span>
+        <form id="payment-form">
+          <div class="form-group">
+            <label for="code">Booking Code</label>
+            <input type="text" class="form-control" id="code" value="HM8P94HMKW">
+          </div>
+          <div class="form-group">
+            <label for="payWith">Pay With</label>
+            <select class="form-control" id="payWith">
+              <option value="credit_card">Credit Card</option>
+              <option value="paypal">PayPal</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="cardNumber">Card Number</label>
+            <input type="text" class="form-control" id="cardNumber" placeholder="Enter card number">
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="cardExpiration">Expiration Date</label>
+              <input type="month" class="form-control" id="cardExpiration">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="cardCVV">CVV</label>
+              <input type="text" class="form-control" id="cardCVV" placeholder="Enter CVV">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="cardHolderName">Card Holder Name</label>
+            <input type="text" class="form-control" id="cardHolderName" placeholder="Enter card holder name">
+          </div>
+        </form>
+  
+        <hr class="dashed">
+        <h1 style="font-size: 28px;">
+          Cancellation policy</h1>
+        <h1 style="font-size: 14px;">This reservation is non-refundable. Learn more</h4>
+          <hr class="dashed">
+          <h1 style="font-size: 28px;">
+            Ground rules</h1>
+          <h1 style="font-size: 14px;">We ask every guest to remember a few simple things about what makes a great
+            guest.<br>Follow the house rules.<br>Treat your Host’s home like your own
+  
+            </h4>
+            <hr class="dashed">
+            <div style="display:flex;flex-direction:row">
+              <span role="img"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+                  role="presentation" focusable="false"
+                  style="display: block; height: 32px; width: 32px; fill: rgb(227, 28, 95); stroke: currentcolor;">
+                  <g>
+                    <g stroke="none">
+                      <path
+                        d="M43 8v21.295L32.295 40l-10.359.001A11.971 11.971 0 0 0 26 31c0-6.627-5.373-12-12-12a12.02 12.02 0 0 0-3.001.378L11 8h32z"
+                        fill-opacity=".2"></path>
+                      <path
+                        d="M32 42v-8a5 5 0 0 1 4.783-4.995L37 29h8V6H34v2h-2V6H22v2h-2V6H9v14.5H7V6a2 2 0 0 1 1.85-1.995L9 4h11V2h2v2h10V2h2v2h11a2 2 0 0 1 1.995 1.85L47 6v24.953L33.953 44H15v-2h17zm12.123-11H37a3 3 0 0 0-2.995 2.824L34 34v7.122L44.123 31z">
+                      </path>
+                    </g>
+                    <g fill="none" stroke-width="2">
+                      <path
+                        d="M14 43c.328 0 .653-.013.974-.039C21.146 42.465 26 37.299 26 31c0-6.627-5.373-12-12-12A11.995 11.995 0 0 0 2 31c0 6.627 5.373 12 12 12z">
+                      </path>
+                      <path d="M23 31h-9v-9"></path>
+                    </g>
+                  </g>
+                </svg></span>
+  
+              <h1 style="font-size: 14px;">
+                Your reservation won’t be confirmed until the Host accepts your request (within 24 hours).</h1>
+            </div>
+            <button type="button" class="btn btn-danger" onclick="validatePaymentForm()">Request to Book</button>
+  
+  
+      </div>
+      <!--pprduct bilgileir-->
+      <div class="container">
+  
+        <div class="card">
+          <div class="card-header" style="display:flex;flex-direction:row">
+            <img class="_6tbg2q d-block " aria-hidden="true" elementtiming="LCP-target" fetchpriority="high"
+              id="FMP-target" loading="eager"
+              src="https://a0.muscache.com/im/pictures/e25a9b25-fa98-4160-bfd1-039287bf38b6.jpg?im_w=720"
+              data-original-uri="https://a0.muscache.com/im/pictures/e25a9b25-fa98-4160-bfd1-039287bf38b6.jpg?im_w=720"
+              style="border-radius:20px ;object-fit: cover; vertical-align: bottom;width : 160px; height:160">
+  
+            <div style="display:flex;flex-direction:column" class="ms-2">
+              <h3>Castle</h3>
+              <p>Private Group Stay in Exclusive Fairytale Castle</p>
+              <p class="text-muted">5.00 (9 reviews)</h4>
+  
+            </div>
+  
+          </div>
+  
+  
+          <div class="card-body">
+  
+            <div role="img" aria-label="Your booking is protected by AirCover" class="d-flex flex-row align-items-center">
+              Your booking is protected by <div><img
+                  src="https://a0.muscache.com/pictures/aircover/aircover-logo/original/56683a2f-f11b-43f6-8af7-a1b3861b2c85.svg"
+                  alt="AirCover"></div>
+            </div>
+            <hr class="dashed">
+  
+  
+            <h5>Price Details</h5>
+            <table class="table">
+              <tr>
+                <td>Day Price</td>
+                <td><%= price_per_day %> ₺</td>
+              </tr>
+             
+              <tr>
+                <td>Total Days</td>
+                <td><div id="output3"></div></td>
+              </tr>
+              <tr>
+                <td>Total Price</td>
+                <td> <div id="output4"></div></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script
@@ -439,5 +653,8 @@
       integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
       crossorigin="anonymous"
     ></script>
+    <script src="/checkDateFormat.js"></script>
+    <script src="/calculateDateDifference.js"></script>
+    <script src="/payment.js"></script>
   </body>
 </html>
