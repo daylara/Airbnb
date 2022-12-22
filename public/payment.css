@@ -36,6 +36,16 @@ h1 {
   padding: 0px !important;
  
 }
+h4{
+  font-size: 12px;
+  line-height: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  color: rgb(113, 113, 113)
+}
 
 .back-button {
   margin-right: auto;
@@ -63,15 +73,16 @@ h1 {
 /* Customize the form styles */
 form {
   margin-top: 1rem;
+ 
 }
 
 .new {
-  margin: auto;
+  margin-top: 0px;
+  margin-left:200px;
+  padding: 2px;
   max-width: 400px;
   max-height: 400px;
-  padding: 20px;
-  float:right;
-  top :100px;
+  
 }
 
 .card {
@@ -80,6 +91,7 @@ form {
   right: 20px;
   top: 20px;
   width: 400px;
+  height: 500px;
   border-radius: 25px;
   margin-top:52px;
   
