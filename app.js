@@ -56,6 +56,33 @@ app.get("/evsahibi", (req, res) => {
     res.render("evsahibi")
 });
 
+app.get("/adverts/:houseType", async (req,res) => {
+    const houseType = req.params.houseType;
+    const advertsByType = [];
+    conn.query(`SELECT adverts.*, GROUP_CONCAT(media.image_url) AS images
+    FROM adverts
+    JOIN house ON adverts.house_id = house.id
+    JOIN media ON adverts.id = media.advert_id
+    WHERE house.house_type = ?
+    GROUP BY adverts.id`, [houseType], (err, rows) => {
+      if(!err) {
+        rows.forEach(RowDataPacket => {
+          advertsByType.push({
+            id: RowDataPacket.id,
+            price_per_day: RowDataPacket.price_per_day,
+            description: RowDataPacket.description,
+            address: RowDataPacket.address,
+            images: RowDataPacket.images.split(',')
+          });
+        });
+        res.json( { adverts: advertsByType });   
+      }
+      else {
+        console.log(err);
+      }
+    });
+  });
+  
 
 
 app.post('/register', (req, res) => {
