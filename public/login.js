@@ -70,3 +70,17 @@ $(document).ready(function () {
     $("#signup-error").text("");
   });
 });
+
+const logoutButton = document.getElementById('logout-button');
+
+
+logoutButton.addEventListener('click', function() {
+  axios.get('/logout')
+    .then(response => {
+      alert(response.data.message);
+      window.location.href = "/";
+    })
+    .catch(error => {
+      alert(error.response.data.message);
+    });
+});

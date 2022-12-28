@@ -131,6 +131,7 @@ function createDetails(advert) {
 
   const price = document.createElement("div");
   const strong = document.createElement("strong");
+  price.textContent = advert.price_per_day;
   price.appendChild(strong);
   div.appendChild(price);
 

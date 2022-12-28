@@ -12,9 +12,19 @@ const app = express();
 app.use(session({
     secret: 'your-secret-key',
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true 
 }));
 
+const multer = require('multer');
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/images/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  }
+});
+const upload = multer({ storage: storage });
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
@@ -38,7 +48,6 @@ app.get("/", async (req, res) => {
                 });
                
           });  
-          //console.log(allAdverts);
           res.render("home",{adverts:allAdverts});
         }
         else
@@ -53,7 +62,7 @@ app.get("/ilan/:id", (req, res) => {
     conn.query(
       `SELECT * FROM adverts INNER JOIN house ON adverts.house_id = house.id INNER JOIN media ON adverts.id = media.advert_id WHERE adverts.id = ${ilanID}`,
       (err, rows) => {
-    
+  
         if (!err) {
           res.render("advert", {
             price_per_day: rows[0].price_per_day,
@@ -145,6 +154,21 @@ app.post("/login", (req,res) => {
             res.json({ success: false, message: 'Invalid email or password.' });
         }
     });
+});
+
+app.get('/logout', function(req, res) {
+  if (!req.session.user) {
+    res.send({ success: false, message: 'You must be logged in to log out.' });
+    return;
+  }
+  req.session.destroy(function(error) {
+    if (error) {
+      res.send({ success: false, message: 'There was an error during the logout process.' });
+      return;
+    }
+    res.send({ success: true, message: 'You have been successfully logged out.' });
+    
+  });
 });
 
 app.listen(process.env.PORT, () => console.log("app is running"));
