@@ -54,6 +54,10 @@ app.get("/", async (req, res) => {
       } else console.log(err);
     }
   );
+  conn.query(
+    `INSERT INTO logs (text) VALUES ('SELECT * FROM adverts INNER JOIN media on adverts.id=media.advert_id')`,
+    (err, rows, fields) => {}
+  );
 });
 
 app.get("/ilan/:id", (req, res) => {
@@ -85,6 +89,10 @@ app.get("/ilan/:id", (req, res) => {
       } else console.log(err);
     }
   );
+  conn.query(
+    `INSERT INTO logs (text) VALUES ('SELECT * FROM adverts INNER JOIN house ON adverts.house_id = house.id INNER JOIN media ON adverts.id = media.advert_id WHERE adverts.id = ${ilanID}')`,
+    (err, rows, fields) => {}
+  );
 });
 
 app.delete("/delete/:id", (req, res) => {
@@ -97,6 +105,10 @@ app.delete("/delete/:id", (req, res) => {
       res.json({ success: true });
     }
   });
+  conn.query(
+    `INSERT INTO logs (text) VALUES ('DELETE FROM adverts WHERE id = ?')`,
+    (err, rows, fields) => {}
+  );
 });
 
 app.get("/city/:name", async (req, res) => {
@@ -119,6 +131,10 @@ app.get("/city/:name", async (req, res) => {
       console.log(err);
     }
   });
+  conn.query(
+    `INSERT INTO logs (text) VALUES ('SELECT * FROM adverts_view WHERE city_id = (SELECT id FROM city WHERE name = ${cityName})')`,
+    (err, rows, fields) => {}
+  );
 });
 app.get("/adverts/:houseType", async (req, res) => {
   const houseType = req.params.houseType;
@@ -147,6 +163,15 @@ app.get("/adverts/:houseType", async (req, res) => {
         console.log(err);
       }
     }
+  );
+  conn.query(
+    `INSERT INTO logs (text) VALUES ('SELECT adverts.*, GROUP_CONCAT(media.image_url) AS images
+    FROM adverts
+    JOIN house ON adverts.house_id = house.id
+    JOIN media ON adverts.id = media.advert_id
+    WHERE house.house_type = ${houseType}
+    GROUP BY adverts.id')`,
+    (err, rows, fields) => {}
   );
 });
 
@@ -199,6 +224,10 @@ app.post("/evsahibi", upload.array("images", 5), async (req, res) => {
         }
       }
     );
+    conn.query(
+      `INSERT INTO logs (text) VALUES ('SELECT id FROM city WHERE name = ${city_name}')`,
+      (err, rows, fields) => {}
+    );
   });
 
   try {
@@ -238,6 +267,10 @@ app.post("/evsahibi", upload.array("images", 5), async (req, res) => {
         }
       }
     );
+    conn.query(
+      `INSERT INTO logs (text) VALUES ('SELECT id FROM house ORDER BY id DESC LIMIT 1')`,
+      (err, rows, fields) => {}
+    );
   });
 
   try {
@@ -273,6 +306,10 @@ app.post("/evsahibi", upload.array("images", 5), async (req, res) => {
         }
       }
     );
+    conn.query(
+      `INSERT INTO logs (text) VALUES ('SELECT id FROM adverts ORDER BY id DESC LIMIT 1')`,
+      (err, rows, fields) => {}
+    );
   });
 
   try {
@@ -292,6 +329,10 @@ app.post("/evsahibi", upload.array("images", 5), async (req, res) => {
       conn.query(sql, [advertId, value], (err, rows) => {
         if (err) throw err;
       });
+      conn.query(
+        `INSERT INTO logs (text) VALUES ('Dosya yükleme hatası!')`,
+        (err, rows, fields) => {}
+      );
     });
   } else {
     res.send("Dosya yükleme hatası!");
@@ -321,11 +362,18 @@ app.get("/evsahibi", async (req, res) => {
           advert_count: RowDataPacket.advert_count,
         });
       });
+      conn.query(
+        `INSERT INTO logs (text) VALUES ('SELECT user_id, COUNT(*) as advert_count FROM adverts WHERE user_id = ${userId} GROUP BY user_id')`,
+        (err, rows, fields) => {}
+      );
     } else console.log(error);
   });
 
   const user_sql = "(SELECT * FROM users WHERE id = ?)";
-
+  conn.query(
+    `INSERT INTO logs (text) VALUES ('SELECT * FROM users WHERE id = ${userId}')`,
+    (err, rows, fields) => {}
+  );
   conn.query(user_sql, userId, (error, rows) => {
     if (!error) {
       rows.forEach((RowDataPacket) => {
@@ -341,7 +389,10 @@ app.get("/evsahibi", async (req, res) => {
   });
   const sql =
     "(SELECT * FROM adverts INNER JOIN media ON adverts.id=media.advert_id WHERE user_id = ?)";
-
+  conn.query(
+    `INSERT INTO logs (text) VALUES ('SELECT * FROM adverts INNER JOIN media ON adverts.id=media.advert_id WHERE user_id = ${userId}')`,
+    (err, rows, fields) => {}
+  );
   conn.query(sql, userId, (error, rows) => {
     if (!error) {
       rows.forEach((RowDataPacket) => {
@@ -386,6 +437,10 @@ app.post("/register", (req, res) => {
         }
       }
     );
+    conn.query(
+      `INSERT INTO logs (text) VALUES ('INSERT IGNORE INTO users (name, password, email) VALUES (${name}, ${password}, ${email}})')`,
+      (err, rows, fields) => {}
+    );
   }
 });
 
@@ -404,21 +459,37 @@ app.post("/login", (req, res) => {
       }
     }
   );
+  conn.query(
+    `INSERT INTO logs (text) VALUES ('SELECT * FROM users WHERE email = ${email} AND password = ${password}')`,
+    (err, rows, fields) => {}
+  );
 });
 
 app.get("/logout", function (req, res) {
   if (!req.session.user) {
+    conn.query(
+      `INSERT INTO logs (text) VALUES ('You must be logged in to log out.')`,
+      (err, rows, fields) => {}
+    );
     res.send({ success: false, message: "You must be logged in to log out." });
     return;
   }
   req.session.destroy(function (error) {
     if (error) {
+      conn.query(
+        `INSERT INTO logs (text) VALUES ('There was an error during the logout process.')`,
+        (err, rows, fields) => {}
+      );
       res.send({
         success: false,
         message: "There was an error during the logout process.",
       });
       return;
     }
+    conn.query(
+      `INSERT INTO logs (text) VALUES ('You have been successfully logged out.')`,
+      (err, rows, fields) => {}
+    );
     res.send({
       success: true,
       message: "You have been successfully logged out.",
@@ -427,6 +498,10 @@ app.get("/logout", function (req, res) {
 });
 
 app.get("/admin", async (req, res) => {
+  conn.query(
+    `INSERT INTO logs (text) VALUES ('admin sayfasına giriş yapıldı')`,
+    (err, rows, fields) => {}
+  );
   res.render("admin");
 });
 app.post("/admin", (req, res) => {
@@ -436,18 +511,41 @@ app.post("/admin", (req, res) => {
     if (!err) {
       // Get the column names from the first row
       const columns = Object.keys(rows[0]);
-
+      conn.query(
+        `INSERT INTO logs (text) VALUES ('${sqlQuery}')`,
+        (err, rows, fields) => {}
+      );
       res.render("adminSql", { rows: rows, columns: columns });
       console.log(rows);
     } else {
       console.log(err);
+      conn.query(
+        `INSERT INTO logs (text) VALUES ('hatalı veya eksik sorgu')`,
+        (err, rows, fields) => {}
+      );
       res.render("admin");
     }
   });
 });
 
 app.get("/admin/sqlOutput", (req, res) => {
+  conn.query(
+    `INSERT INTO logs (text) VALUES ('admin sayfası sorgu sonucu görüntülendi')`,
+    (err, rows, fields) => {}
+  );
   res.render("adminSql");
+});
+
+app.get("/admin/logs", (req, res) => {
+  conn.query(`SELECT * FROM logs`, (err, rows) => {
+    if (!err) {
+      // Get the column names from the first row
+      const columns = Object.keys(rows[0]);
+      res.render("adminLogs", { rows: rows, columns: columns });
+    } else {
+      console.log(err);
+    }
+  });
 });
 
 app.listen(process.env.PORT, () => console.log("app is running"));
