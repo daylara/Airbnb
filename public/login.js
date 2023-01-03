@@ -84,3 +84,27 @@ logoutButton.addEventListener('click', function() {
       alert(error.response.data.message);
     });
 });
+
+
+const button = document.getElementById("trash-button");
+
+button.addEventListener("click", function(event) {
+  event.preventDefault();
+  const advert_id = button.getAttribute('data-user-id');
+  console.log(advert_id);
+  $.ajax({
+    type: "DELETE",
+    url: "/delete/:id",
+    data: { id:advert_id},
+    dataType: "json",
+    success: (response) => {
+      if (response.success) {
+        window.location.href = "/evsahibi";
+      }
+    },
+    error: (error) => {
+      console.error(error);
+      alert("YETO");
+    }
+  });
+});

@@ -1,11 +1,11 @@
 CREATE TABLE users(
 	id int NOT NULL AUTO_INCREMENT,
 	name varchar(255) NOT NULL,
-	email varchar(255) NOT NULL,
+	email varchar(255) NOT NULL UNIQUE,
 	password varchar(255) NOT NULL,
 	phone_number varchar(255) NOT NULL,
-	created_at datetime NOT NULL,
-	updated_at datetime NOT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	PRIMARY KEY (id)
 );
 
@@ -27,8 +27,8 @@ CREATE TABLE house (
 	has_air_con tinyint(1) NOT NULL,
 	has_heating tinyint(1) NOT NULL,
 	has_internet tinyint(1) NOT NULL,
-	created_at datetime NOT NULL,
-	updated_at datetime NOT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	PRIMARY KEY (id)
 );
 
@@ -37,12 +37,12 @@ CREATE TABLE adverts (
 	price_per_day int NOT NULL,
 	description varchar(255) NOT NULL,
 	address varchar(255) NOT NULL,
-	created_at datetime NOT NULL,
-	updated_at datetime NOT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	city_id int NOT NULL,
 	user_id int NOT NULL,
 	house_id int NOT NULL,
-	status tinyint(1) NOT NULL,
+	status tinyint(1) NOT NULL DEFAULT 0,
 	PRIMARY KEY (id),
 	FOREIGN KEY (city_id) REFERENCES city(id),
 	FOREIGN KEY (user_id) REFERENCES users(id),
@@ -64,9 +64,9 @@ CREATE TABLE reservations(
 	check_in datetime NOT NULL,
 	check_out datetime NOT NULL,
 	price  int NOT NULL,
-	created_at datetime NOT NULL,
-	updated_at datetime NOT NULL,
-	status tinyint(1) NOT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	status tinyint(1) NOT NULL DEFAULT 0,
 	PRIMARY KEY (id),
 	FOREIGN KEY (advert_id) REFERENCES adverts(id),
 	FOREIGN KEY (user_id) REFERENCES users(id)
@@ -83,7 +83,23 @@ CREATE TABLE reviews(
 	
 );
 
+CREATE VIEW adverts_view AS
+  SELECT a.*, GROUP_CONCAT(m.image_url) AS images
+  FROM adverts a
+  INNER JOIN media m ON a.id = m.advert_id
+  GROUP BY a.id;
 
+ALTER TABLE test.adverts DROP FOREIGN KEY adverts_ibfk_1;
+ALTER TABLE test.adverts ADD CONSTRAINT adverts_ibfk_1 FOREIGN KEY (city_id) REFERENCES test.city(id) ON DELETE CASCADE ON UPDATE RESTRICT;
+
+ALTER TABLE test.adverts DROP FOREIGN KEY adverts_ibfk_3;
+ALTER TABLE test.adverts ADD CONSTRAINT adverts_ibfk_3 FOREIGN KEY (house_id) REFERENCES test.house(id) ON DELETE CASCADE ON UPDATE RESTRICT;
+ALTER TABLE test.adverts DROP FOREIGN KEY adverts_ibfk_2;
+ALTER TABLE test.adverts ADD CONSTRAINT adverts_ibfk_2 FOREIGN KEY (user_id) REFERENCES test.users(id) ON DELETE CASCADE ON UPDATE RESTRICT;
+ALTER TABLE test.media DROP FOREIGN KEY media_ibfk_1;
+ALTER TABLE test.media ADD CONSTRAINT media_ibfk_1 FOREIGN KEY (advert_id) REFERENCES test.adverts(id) ON DELETE CASCADE ON UPDATE RESTRICT;
+ALTER TABLE test.adverts DROP FOREIGN KEY adverts_ibfk_3;
+ALTER TABLE test.adverts ADD CONSTRAINT adverts_ibfk_3 FOREIGN KEY (house_id) REFERENCES test.house(id) ON DELETE CASCADE ON UPDATE CASCADE;
 INSERT INTO `city` VALUES (1,'West Ciaraberg'),
 						(2,'Declanbury'),
 						(3,'Littelland'),
@@ -225,3 +241,154 @@ INSERT INTO `reviews` VALUES (1,1,9,'Ex fuga modi dolor necessitatibus impedit a
 
 
 
+UPDATE test.media
+	SET image_url='/public/images/0d93e337-c49c-4bf5-83f4-982cb9f2e132.jpg'
+	WHERE id=1;
+UPDATE test.media
+	SET image_url='/public/images/661bf5d6-5f89-4ab6-8397-86e1002f2c2d.jpg'
+	WHERE id=2;
+UPDATE test.media
+	SET image_url='/public/images/5c9897c0-271e-4982-8392-da12c6ba373a.jpg'
+	WHERE id=3;
+UPDATE test.media
+	SET image_url='/public/images/79fb2c80-bf4d-4a7e-8f66-9011fb14d814.jpg'
+	WHERE id=4;
+UPDATE test.media
+	SET image_url='/public/images/c7a534fc-a289-4ca0-862b-282bad0b3487.jpg'
+	WHERE id=5;
+UPDATE test.media
+	SET image_url='/public/images/3efc8fc3-0d9b-4ae3-a4ad-5acd2af63023.jpg'
+	WHERE id=6;
+UPDATE test.media
+	SET image_url='/public/images/9e3f7acd-ca97-43fb-ab77-3e8284cbe489.jpg'
+	WHERE id=7;
+UPDATE test.media
+	SET image_url='/public/images/bda69a7d-fd27-4407-8370-e891bb5338aa.jpg'
+	WHERE id=8;
+UPDATE test.media
+	SET image_url='/public/images/67f7d021-b98f-4fa5-af13-f4aa13a38fd1.jpg'
+	WHERE id=9;
+UPDATE test.media
+	SET image_url='/public/images/fe8e1eab-bb75-4cb9-a735-64d2c74120d7.jpg'
+	WHERE id=10;
+UPDATE test.media
+	SET image_url='/public/images/c3fa3c40-4c21-4775-a478-599198f1979f.jpg'
+	WHERE id=11;
+UPDATE test.media
+	SET image_url='/public/images/809ca1df-4009-4c7d-bc76-700ced9610ba.jpg'
+	WHERE id=12;
+UPDATE test.media
+	SET image_url='/public/images/3ae268be-2695-4d3a-8b69-39c2178c7d08.jpg'
+	WHERE id=13;
+UPDATE test.media
+	SET image_url='/public/images/74da68ea-4ffc-49c4-ba76-c2b0817b6543.jpg'
+	WHERE id=14;
+UPDATE test.media
+	SET image_url='/public/images/40ab55f2-c0bf-4aee-8370-61d1044f5ec7.jpg'
+	WHERE id=15;
+UPDATE test.media
+	SET image_url='/public/images/57e96162-6804-4773-bb59-dd5ca8e69e21.jpg'
+	WHERE id=16;
+UPDATE test.media
+	SET image_url='/public/images/41a530cd-f0ea-4716-bf6c-9e4fd997804d.jpg'
+	WHERE id=17;
+UPDATE test.media
+	SET image_url='/public/images/e352de89-252f-436d-98ce-32517d8ffddf.jpg'
+	WHERE id=18;
+UPDATE test.media
+	SET image_url='/public/images/44c4aaf6-3608-4f3c-8a2d-4318e9e47430.jpg'
+	WHERE id=19;
+UPDATE test.media
+	SET image_url='/public/images/7ea52b34-8177-45ab-b5ad-d1cb83b6f006.jpg'
+	WHERE id=20;
+UPDATE test.media
+	SET image_url='/public/images/bfabec98-9710-4b36-a579-25016adac550.jpg'
+	WHERE id=21;
+UPDATE test.media
+	SET image_url='/public/images/2517c68d-471b-44d0-9a38-726b808b53cd.jpg'
+	WHERE id=22;
+UPDATE test.media
+	SET image_url='/public/images/0118d9cd-6016-44e9-8df5-315b22a34049.jpg'
+	WHERE id=23;
+UPDATE test.media
+	SET image_url='/public/images/55e7f559-f6b7-46b1-8d1d-184d32bf7fae.jpg'
+	WHERE id=24;
+UPDATE test.media
+	SET image_url='/public/images/d1c3be0e-b743-4826-bcf7-83acb196a493.jpg'
+	WHERE id=25;
+UPDATE test.media
+	SET image_url='/public/images/cfa8c22b-9ed7-4f02-b7a7-98919af561d6.jpeg'
+	WHERE id=26;
+UPDATE test.media
+	SET image_url='/public/images/eb90c3e5-5a0a-4ffa-9c5d-b6485d6fba7a.jpg'
+	WHERE id=27;
+UPDATE test.media
+	SET image_url='/public/images/e5536d36-502e-4214-82d4-8d092993216a.jpg'
+	WHERE id=28;
+UPDATE test.media
+	SET image_url='/public/images/325b7fdd-75d2-412d-8576-f8eb2a97d207.jpg'
+	WHERE id=29;
+UPDATE test.media
+	SET image_url='/public/images/58509597-2070-49ca-91b6-241408820b6d.jpg'
+	WHERE id=30;
+UPDATE test.media
+	SET image_url='/public/images/482d0da5-502d-46b7-853b-687c56bc3e99.jpeg'
+	WHERE id=31;
+UPDATE test.media
+	SET image_url='/public/images/1085f5c3-c0ab-4516-b917-720f2d9da76f.jpg'
+	WHERE id=32;
+UPDATE test.media
+	SET image_url='/public/images/9d07887f-944c-4d23-a2c9-570984d9c977.jpeg'
+	WHERE id=33;
+UPDATE test.media
+	SET image_url='/public/images/b9ecd6c0-60ce-4f13-b1bc-f9168ce4a29b.jpeg'
+	WHERE id=34;
+UPDATE test.media
+	SET image_url='/public/images/f7994e20-9632-49ac-80fd-06db2fc9b525.jpeg'
+	WHERE id=35;
+UPDATE test.media
+	SET image_url='/public/images/011e1f9f-8a09-42f2-bf16-ea339d46b3de.jpg'
+	WHERE id=36;
+UPDATE test.media
+	SET image_url='/public/images/9fd6ab9a-2d6b-4ca5-8ded-017cf2b1e009.jpg'
+	WHERE id=37;
+UPDATE test.media
+	SET image_url='/public/images/49a12507-54e7-4bc5-a547-4a4706fea1e5.jpg'
+	WHERE id=38;
+UPDATE test.media
+	SET image_url='/public/images/cf2529cc-2f2c-438d-a705-b1c805fc0091.jpg'
+	WHERE id=39;
+UPDATE test.media
+	SET image_url='/public/images/1631c1e2-bcc6-417a-9bc0-3218fe8ef288.jpg'
+	WHERE id=40;
+UPDATE test.media
+	SET image_url='/public/images/1feb61aa-9dbf-42a9-b125-62ea5d1682d3.jpg'
+	WHERE id=41;
+UPDATE test.media
+	SET image_url='/public/images/a67721b2-b7ef-4861-8fd5-cb10ad3f3512.jpg'
+	WHERE id=42;
+UPDATE test.media
+	SET image_url='/public/images/72c9bcec-d23b-4546-a49a-25242553513c.jpg'
+	WHERE id=43;
+UPDATE test.media
+	SET image_url='/public/images/323124d2-b5b5-4c2c-83aa-70b5995d774a.jpg'
+	WHERE id=44;
+UPDATE test.media
+	SET image_url='/public/images/0749b996-3aae-4fee-b89a-ddecbdc5bf1c.jpg'
+	WHERE id=45;
+UPDATE test.media
+	SET image_url='/public/images/47a239d9-3739-4f32-ae97-3c706ec23d7e.jpg'
+	WHERE id=46;
+UPDATE test.media
+	SET image_url='/public/images/4d1a2af5-d66f-43a9-82b5-e7750cf47058.jpg'
+	WHERE id=47;
+UPDATE test.media
+	SET image_url='/public/images/6ca8be94-c7db-4227-a034-4147f17eefbf.jpg'
+	WHERE id=48;
+UPDATE test.media
+	SET image_url='/public/images/0eb171a3-2862-40d8-bf11-2ee088e39ff4.jpg'
+	WHERE id=49;
+UPDATE test.media
+	SET image_url='/public/images/8fc71eb7-1f86-4982-8ec0-d905789ae6be.jpg'
+	WHERE id=50;
+                 

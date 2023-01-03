@@ -31,36 +31,23 @@
               fill="#FF385C"></path>
           </svg>
         </a>
-        <div class="d-flex shadow border border-light rounded-5" style="cursor: pointer;" onclick="theFunction()"
-          onmouseover="this.style.background='#FF385C'" onmouseout="this.style.background=''">
-          <script>
-
-            function theFunction() {
-              document.getElementById("container").style = "height: 200px";
-            }
-          </script>
-          <button class="btn no-hover rounded-5 py-2 ps-4" style="border-color: #fff">
-
-            Herhangi bir yer
-          </button>
-
-          <div class="vr"></div>
-
-          <button class="btn no-hover rounded-5 py-2" style="border-color: #fff">
-            Herhangi bir hafta
-          </button>
-          <div class="vr"></div>
-          <button class="btn no-hover rounded-5 py-2 pe-4 text-secondary" style="border-color: #fff">
-            Misafir Ekleyin
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-              class="bi bi-search-heart-fill" viewBox="0 0 16 16">
-              <path
-                d="M6.5 13a6.474 6.474 0 0 0 3.845-1.258h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.008 1.008 0 0 0-.115-.1A6.471 6.471 0 0 0 13 6.5 6.502 6.502 0 0 0 6.5 0a6.5 6.5 0 1 0 0 13Zm0-8.518c1.664-1.673 5.825 1.254 0 5.018-5.825-3.764-1.664-6.69 0-5.018Z"
-                fill="#FF385C"></path>
-            </svg>
-          </button>
-
+        <div class="d-flex shadow border border-light rounded-5" style="cursor: pointer;">
+          <form id="city-form">
+            <div style="display: flex; align-items: center;">
+              <input type="text" id="city-name" placeholder="Enter city" class="form-control rounded-5 py-2" style="border-color: #fff">
+              <button type="submit" class="btn btn-search rounded-5 py-2 pe-4 text-secondary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-search-heart-fill"
+                  viewBox="0 0 16 16">
+                  <path
+                    d="M6.5 13a6.474 6.474 0 0 0 3.845-1.258h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.008 1.008 0 0 0-.115-.1A6.471 6.471 0 0 0 13 6.5 6.502 6.502 0 0 0 6.5 0a6.5 6.5 0 1 0 0 13Zm0-8.518c1.664-1.673 5.825 1.254 0 5.018-5.825-3.764-1.664-6.69 0-5.018Z"
+                    fill="#FF385C"></path>
+                </svg>
+              </button>
+            </div>
+          
+          </form>
         </div>
+        
         <!-- account container-->
         <div class="d-flex align-items-center">
           <a href="/evsahibi" class="text-decoration-none link-dark">
@@ -329,7 +316,7 @@
     <section>
 <!-- ilanların olacagı kısım 8 örnek scroll halini görmek için-->
       <div class="container-fluid p-5 py-3">
-        <div class="row" style="margin-top: 150px">
+        <div class="row">
            <% for (var i = 0, j=1; i < adverts.length; i+=5, j++) { %>
           <div class="col-12 col-md-6 col-lg-4 col-xl-3">
                 <a href="/ilan/<%= j %>" class="card card-video border-0 bg-transparent mb-4">
