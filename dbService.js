@@ -13,8 +13,18 @@ var mysqlConnection = mysql.createConnection({
 mysqlConnection.connect((err) => {
   if (err) {
     console.log(err.message);
-  }   
+  }
   console.log("db " + mysqlConnection.state);
+  mysqlConnection.query(
+    `INSERT INTO logs (text) VALUES ('database + ${mysqlConnection.state}')`,
+    (err, rows, fields) => {
+      if (!err) {
+        console.log("Database created successfully");
+      } else {
+        console.log(err);
+      }
+    }
+  );
 });
 
 module.exports = mysqlConnection;
