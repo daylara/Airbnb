@@ -23,6 +23,30 @@ chipContainer.addEventListener("click", (event) => {
   }
 });
 
+
+const formElement = document.querySelector('#city-form');  
+formElement.addEventListener('submit', (event) => {  
+  event.preventDefault();  
+  const cityName = document.getElementById('city-name').value;
+  console.log(cityName); 
+  axios.get(`/city/${cityName}`)  
+    .then((response) => { 
+      document.getElementById('city-form').reset();
+      const data = response.data;
+        const adverts = data.adverts;
+        const advertList = document.querySelector(".row");
+        advertList.innerHTML = "";
+        for (const advert of adverts) {
+          const advertCard = createAdvertCard(advert);
+          advertList.appendChild(advertCard);
+        }
+    })
+    .catch((error) => {  
+      console.log(error);
+    });
+});
+
+
 function createAdvertCard(advert) {
   const advertCard = document.createElement("div");
   advertCard.classList.add("col-12", "col-md-6", "col-lg-4", "col-xl-3");
@@ -131,9 +155,9 @@ function createDetails(advert) {
 
   const price = document.createElement("div");
   const strong = document.createElement("strong");
+  price.textContent = advert.price_per_day;
   price.appendChild(strong);
   div.appendChild(price);
 
   return details;
 }
-

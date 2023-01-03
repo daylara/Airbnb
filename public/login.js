@@ -70,3 +70,41 @@ $(document).ready(function () {
     $("#signup-error").text("");
   });
 });
+
+const logoutButton = document.getElementById('logout-button');
+
+
+logoutButton.addEventListener('click', function() {
+  axios.get('/logout')
+    .then(response => {
+      alert(response.data.message);
+      window.location.href = "/";
+    })
+    .catch(error => {
+      alert(error.response.data.message);
+    });
+});
+
+
+const button = document.getElementById("trash-button");
+
+button.addEventListener("click", function(event) {
+  event.preventDefault();
+  const advert_id = button.getAttribute('data-user-id');
+  console.log(advert_id);
+  $.ajax({
+    type: "DELETE",
+    url: "/delete/:id",
+    data: { id:advert_id},
+    dataType: "json",
+    success: (response) => {
+      if (response.success) {
+        window.location.href = "/evsahibi";
+      }
+    },
+    error: (error) => {
+      console.error(error);
+      alert("YETO");
+    }
+  });
+});

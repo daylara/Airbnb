@@ -12,9 +12,20 @@ const app = express();
 app.use(session({
     secret: 'your-secret-key',
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true 
 }));
 
+const path = require('path');
+const multer = require('multer');
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/images/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
+const upload = multer({ storage: storage });
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
@@ -38,7 +49,6 @@ app.get("/", async (req, res) => {
                 });
                
           });  
-          //console.log(allAdverts);
           res.render("home",{adverts:allAdverts});
         }
         else
@@ -53,7 +63,7 @@ app.get("/ilan/:id", (req, res) => {
     conn.query(
       `SELECT * FROM adverts INNER JOIN house ON adverts.house_id = house.id INNER JOIN media ON adverts.id = media.advert_id WHERE adverts.id = ${ilanID}`,
       (err, rows) => {
-    
+  
         if (!err) {
           res.render("advert", {
             price_per_day: rows[0].price_per_day,
@@ -79,38 +89,255 @@ app.get("/ilan/:id", (req, res) => {
       }
     );
     });
-app.get("/evsahibi", (req, res) => {
-    res.render("evsahibi")
+
+app.delete('/delete/:id', (req, res) => {
+  const advertId = req.params.id;
+  const deleteQuery = 'DELETE FROM adverts WHERE id = ?';
+  conn.query(deleteQuery, [advertId], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json({success: true});
+    }
+  });
 });
 
-app.get("/adverts/:houseType", async (req,res) => {
-    const houseType = req.params.houseType;
-    const advertsByType = [];
-    conn.query(`SELECT adverts.*, GROUP_CONCAT(media.image_url) AS images
+
+app.get('/city/:name', async (req,res) => {
+  const cityName = req.params.name;
+  const advertsByCity = [];
+  const query = `SELECT * FROM adverts_view WHERE city_id = (SELECT id FROM city WHERE name = ?)`;
+  conn.query(query,[cityName], (err, rows) => {
+    if(!err) {
+      rows.forEach(RowDataPacket => {
+        advertsByCity.push({
+          id: RowDataPacket.id,
+          price_per_day: RowDataPacket.price_per_day,
+          description: RowDataPacket.description,
+          address: RowDataPacket.address,
+          images: RowDataPacket.images.split(',')
+        });
+      });
+      res.json( { adverts: advertsByCity });   
+    }
+    else {
+      console.log(err);
+    }
+  });
+
+});
+app.get("/adverts/:houseType", async (req, res) => {
+  const houseType = req.params.houseType;
+  const advertsByType = [];
+  conn.query(`SELECT adverts.*, GROUP_CONCAT(media.image_url) AS images
     FROM adverts
     JOIN house ON adverts.house_id = house.id
     JOIN media ON adverts.id = media.advert_id
     WHERE house.house_type = ?
     GROUP BY adverts.id`, [houseType], (err, rows) => {
-      if(!err) {
-        rows.forEach(RowDataPacket => {
-          advertsByType.push({
-            id: RowDataPacket.id,
-            price_per_day: RowDataPacket.price_per_day,
-            description: RowDataPacket.description,
-            address: RowDataPacket.address,
-            images: RowDataPacket.images.split(',')
-          });
+    if (!err) {
+      rows.forEach(RowDataPacket => {
+        advertsByType.push({
+          id: RowDataPacket.id,
+          price_per_day: RowDataPacket.price_per_day,
+          description: RowDataPacket.description,
+          address: RowDataPacket.address,
+          images: RowDataPacket.images.split(',')
         });
-        res.json( { adverts: advertsByType });   
-      }
-      else {
-        console.log(err);
+      });
+      res.json({ adverts: advertsByType });
+    }
+    else {
+      console.log(err);
+    }
+  });
+});
+
+
+
+app.post("/evsahibi", upload.array('images', 5), async(req, res) => {
+  const images = req.files;
+  images.forEach(image => {
+    console.log(image.filename);
+    console.log(image.path);
+    console.log(image.mimetype);
+  });
+  const { price_per_day, description, address, house_type, total_bedrooms, total_bathrooms, num_guests,
+     has_tv, has_kitchen, has_air_con, has_heating, has_internet} = req.body;
+  console.log(req.body);
+  const user_id = req.session.user.id;
+  const city_name = req.body.city_name;
+  let city_id;
+  let house_id;
+  let advert_id;
+  const insertCityQuery = `INSERT INTO city (name)
+                           SELECT * FROM (SELECT ?) AS tmp
+                           WHERE NOT EXISTS (
+                           SELECT name FROM city WHERE name = ? ) LIMIT 1`;
+  
+  try {
+    const result = await conn.query(insertCityQuery , [city_name, city_name]);
+  } catch (err) {
+    console.error(err);
+  }
+  const getCityId = new Promise((resolve, reject) => {
+    conn.query(`SELECT id FROM city WHERE name = ?`, [city_name] , (err, results) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(results[0].id);
       }
     });
   });
   
+  try {
+    city_id = await getCityId;
+  } catch (err) {
+    console.error(err);
+  }
+  
+  console.log("city_id = ",city_id);
+  
+  const createHouseQuery = `INSERT INTO house (house_type, total_bedrooms, total_bathrooms, num_guests, has_tv, has_kitchen,
+                             has_air_con, has_heating, has_internet) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+  const createHouseParams = [house_type, total_bedrooms, total_bathrooms, num_guests, has_tv, has_kitchen, has_air_con, has_heating, has_internet];
+  try {
+    const result2 = await conn.query(createHouseQuery,createHouseParams);
+  } catch (err) {
+    console.error(err);
+  }
+  const getHouseId = new Promise((resolve, reject) => {
+    conn.query(`SELECT id FROM house ORDER BY id DESC LIMIT 1; `, (err, results) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(results[0].id);
+      }
+    });
+  });
+  
+  try {
+    house_id = await getHouseId;
+  } catch (err) {
+    console.error(err);
+  }
 
+  console.log("house_id =" , house_id);
+
+  const createAdvertQuery = `INSERT INTO adverts (price_per_day, description, address, city_id, user_id, house_id) VALUES (?, ?, ?, ?, ?, ?)`;
+  const createAdvertParams = [price_per_day, description, address, city_id, user_id, house_id];
+  try {
+    const result3 = await conn.query(createAdvertQuery,createAdvertParams);
+  } catch (err) {
+    console.error(err);
+  }
+  const getAdvertId = new Promise((resolve, reject) => {
+    conn.query(`SELECT id FROM adverts ORDER BY id DESC LIMIT 1; `, (err, results) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(results[0].id);
+      }
+    });
+  });
+  
+  try {
+    advert_id = await getAdvertId;
+  } catch (err) {
+    console.error(err);
+  }
+  console.log("advert_id= " , advert_id);
+  if (images.length > 0) {
+    const sql = "INSERT INTO media (advert_id,image_url) VALUES (?, ?)";
+    const advertId = advert_id;  
+    const values = images.map(image => ["/public/images/" + image.filename]);
+    values.forEach(value => {
+      console.log(value)
+    })
+    values.forEach(value => {
+      conn.query(sql, [advertId, value], (err, rows) => {
+        if (err) throw err;
+      });
+    });
+  } else {
+    res.send("Dosya yükleme hatası!");
+  }
+  res.redirect('/evsahibi');
+  
+});
+
+app.get("/evsahibi", async (req, res) => {
+  const advertResults=[];
+  const user_data=[];
+  const number_of_advert=[];
+
+  if (!req.session.user) {
+      res.redirect("/");
+      return;
+    }
+  
+  const userId = req.session.user.id;
+
+  const advertofuser_sql =  "(SELECT user_id, COUNT(*) as advert_count FROM adverts WHERE user_id = ? GROUP BY user_id)";
+  
+  conn.query(advertofuser_sql, userId, (error, rows) => {
+    if(!error){
+        rows.forEach(RowDataPacket => {
+           number_of_advert.push({
+                advert_count: RowDataPacket.advert_count,
+            });
+
+      });  
+    }
+    else
+    console.log(error);
+  });
+
+  const user_sql =  "(SELECT * FROM users WHERE id = ?)";
+  
+  conn.query(user_sql, userId, (error, rows) => {
+    if(!error){
+        rows.forEach(RowDataPacket => {
+            user_data.push({
+                name: RowDataPacket.name,
+                email: RowDataPacket.email,
+                phone_number: RowDataPacket.phone_number,
+                created_at: RowDataPacket.created_at,
+            });
+            console.log(user_data);
+           
+
+      });  
+      
+    }
+    else
+    console.log(error);
+  });
+  const sql =  "(SELECT * FROM adverts INNER JOIN media ON adverts.id=media.advert_id WHERE user_id = ?)";
+  
+  conn.query(sql, userId, (error, rows) => {
+    if(!error){
+        rows.forEach(RowDataPacket => {
+            advertResults.push({
+                id: RowDataPacket.advert_id,
+                price_per_day: RowDataPacket.price_per_day,
+                description: RowDataPacket.description,
+                address: RowDataPacket.address,
+                image_url: RowDataPacket.image_url,
+            });
+
+      });  
+      console.log(userId);
+      console.log(advertResults);
+  
+      res.render("evsahibi",{adverts2:advertResults,adverts3:user_data,number_of_advert:number_of_advert});
+    }
+    else
+    console.log(error);
+  });
+
+ 
+});
 
 app.post('/register', (req, res) => {
     const { name, password, email } = req.body;
@@ -145,6 +372,21 @@ app.post("/login", (req,res) => {
             res.json({ success: false, message: 'Invalid email or password.' });
         }
     });
+});
+
+app.get('/logout', function(req, res) {
+  if (!req.session.user) {
+    res.send({ success: false, message: 'You must be logged in to log out.' });
+    return;
+  }
+  req.session.destroy(function(error) {
+    if (error) {
+      res.send({ success: false, message: 'There was an error during the logout process.' });
+      return;
+    }
+    res.send({ success: true, message: 'You have been successfully logged out.' });
+    
+  });
 });
 
 app.listen(process.env.PORT, () => console.log("app is running"));
