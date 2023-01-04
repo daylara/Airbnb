@@ -1,5 +1,4 @@
 $(document).ready(() => {
-
   $("#login-btn").click((event) => {
     event.preventDefault();
 
@@ -17,21 +16,19 @@ $(document).ready(() => {
         } else {
           $("#login-error").text(response.message);
           setTimeout(() => {
-            $("#login-error").text(""); 
-          }, 3000); 
-           
+            $("#login-error").text("");
+          }, 3000);
         }
       },
       error: (error) => {
         console.error(error);
         $("#login-error").text("An error occurred. Please try again later.");
-      }
+      },
     });
   });
 });
 
 $(document).ready(() => {
-
   $("#signup-btn").click((event) => {
     event.preventDefault();
     const name = $("#orangeForm-name").val();
@@ -48,14 +45,13 @@ $(document).ready(() => {
         } else {
           $("#signup-error").text(response.message);
           setTimeout(() => {
-            $("#signup-error").text(""); 
-          }, 3000); 
-
+            $("#signup-error").text("");
+          }, 3000);
         }
       },
       error: (error) => {
         console.error(error);
-      }
+      },
     });
   });
 });
@@ -63,7 +59,6 @@ $(document).ready(() => {
 // reset sign up modal after clicked close button
 $(document).ready(function () {
   $(".modal").on("hidden.bs.modal", function () {
-
     $("#orangeForm-name").val("");
     $("#orangeForm-email").val("");
     $("#orangeForm-pass").val("");
@@ -71,40 +66,39 @@ $(document).ready(function () {
   });
 });
 
-const logoutButton = document.getElementById('logout-button');
+const logoutButton = document.getElementById("logout-button");
 
-
-logoutButton.addEventListener('click', function() {
-  axios.get('/logout')
-    .then(response => {
+logoutButton.addEventListener("click", function () {
+  axios
+    .get("/logout")
+    .then((response) => {
       alert(response.data.message);
       window.location.href = "/";
     })
-    .catch(error => {
+    .catch((error) => {
       alert(error.response.data.message);
     });
 });
 
-
 const button = document.getElementById("trash-button");
 
-button.addEventListener("click", function(event) {
-  event.preventDefault();
-  const advert_id = button.getAttribute('data-user-id');
-  console.log(advert_id);
-  $.ajax({
-    type: "DELETE",
-    url: "/delete/:id",
-    data: { id:advert_id},
-    dataType: "json",
-    success: (response) => {
-      if (response.success) {
-        window.location.href = "/evsahibi";
-      }
-    },
-    error: (error) => {
-      console.error(error);
-      alert("YETO");
-    }
-  });
-});
+// button.addEventListener("click", function (event) {
+//   // event.preventDefault();
+//   const advert_id = button.getAttribute("data-user-id");
+//   console.log("advert_id", advert_id);
+//   $.ajax({
+//     type: "DELETE",
+//     url: `/delete/${advert_id}`,
+//     data: { id: advert_id },
+//     dataType: "json",
+//     success: (response) => {
+//       if (response.success) {
+//         window.location.href = "/evsahibi";
+//       }
+//     },
+//     error: (error) => {
+//       console.error(error);
+//       alert("YETO");
+//     },
+//   });
+// });

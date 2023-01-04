@@ -49,7 +49,7 @@ app.get("/", async (req, res) => {
             image_url: RowDataPacket.image_url,
           });
         });
-        console.log(allAdverts);
+        // console.log(allAdverts);
         res.render("home", { adverts: allAdverts });
       } else console.log(err);
     }
@@ -85,7 +85,7 @@ app.get("/ilan/:id", (req, res) => {
           has_heating: rows[0].has_heating,
           has_internet: rows[0].has_internet,
         });
-        console.log(rows);
+        // console.log(rows);
       } else console.log(err);
     }
   );
@@ -95,20 +95,42 @@ app.get("/ilan/:id", (req, res) => {
   );
 });
 
-app.delete("/delete/:id", (req, res) => {
-  const advertId = req.params.id;
+// app.delete("/delete/:id", (req, res) => {
+//   const advertId = req.params.id;
+//   const deleteQuery = "DELETE FROM adverts WHERE id = ?";
+// const deleteQueryHouse = "DELETE FROM house WHERE id = ?";
+//   conn.query(deleteQuery, [advertId], (err, result) => {
+//     if (err) {
+//       console.log(err);
+//     } else {
+//       res.json({ success: true });
+//     }
+//   });
+
+//   conn.query(
+//     `INSERT INTO logs (text) VALUES ('DELETE FROM adverts WHERE id = ?')`,
+//     (err, rows, fields) => {}
+//   );
+// });
+
+app.post("/delete", (req, res) => {
+  const silinecekIlanId = Number(req.body.silinecekIlanId);
   const deleteQuery = "DELETE FROM adverts WHERE id = ?";
-  conn.query(deleteQuery, [advertId], (err, result) => {
+  const deleteQueryHouse = "DELETE FROM house WHERE id = ?";
+
+  conn.query(deleteQueryHouse, [silinecekIlanId], (err, result) => {
     if (err) {
       console.log(err);
     } else {
-      res.json({ success: true });
+      res.redirect("/");
     }
   });
-  conn.query(
-    `INSERT INTO logs (text) VALUES ('DELETE FROM adverts WHERE id = ?')`,
-    (err, rows, fields) => {}
-  );
+  conn.query(deleteQuery, [silinecekIlanId], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+    }
+  });
 });
 
 app.get("/city/:name", async (req, res) => {
@@ -177,11 +199,11 @@ app.get("/adverts/:houseType", async (req, res) => {
 
 app.post("/evsahibi", upload.array("images", 5), async (req, res) => {
   const images = req.files;
-  images.forEach((image) => {
-    console.log(image.filename);
-    console.log(image.path);
-    console.log(image.mimetype);
-  });
+  // images.forEach((image) => {
+  //   console.log(image.filename);
+  //   console.log(image.path);
+  //   console.log(image.mimetype);
+  // });
   const {
     price_per_day,
     description,
@@ -196,7 +218,7 @@ app.post("/evsahibi", upload.array("images", 5), async (req, res) => {
     has_heating,
     has_internet,
   } = req.body;
-  console.log(req.body);
+  // console.log(req.body);
   const user_id = req.session.user.id;
   const city_name = req.body.city_name;
   let city_id;
@@ -405,7 +427,7 @@ app.get("/evsahibi", async (req, res) => {
         });
       });
       console.log(userId);
-      console.log(advertResults);
+      // console.log(advertResults);
 
       res.render("evsahibi", {
         adverts2: advertResults,
